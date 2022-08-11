@@ -10,7 +10,7 @@
       <el-input v-model="id" placeholder="请输入账号" id="idd"></el-input>
       <el-input placeholder="请输入密码" v-model="pw" show-password></el-input>
       <div id="wm"><a href="javascript:void">忘记密码?&nbsp;&nbsp;</a></div>
-      <button class="btn-login" >登录</button>
+      <button class="btn-login" @click="login">登录</button>
     </div>
 
     <div class="bott">
@@ -40,9 +40,9 @@
       <el-form ref="form" :model="form" label-width="80px">
           <el-form-item label="我是">
             <el-select v-model="form.region" placeholder="你的身份">
-              <el-option label="学生" value="shanghai"></el-option>
-              <el-option label="教职工" value="beijing"></el-option>
-              <el-option label="维修师傅" value="beijinghh"></el-option>
+              <el-option label="学生" value="student"></el-option>
+              <el-option label="教职工" value="staff"></el-option>
+              <el-option label="维修师傅" value="repairMan"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="设置账号">
@@ -56,7 +56,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">立即创建</el-button>
-            <el-button @click="cancel">取消</el-button>
+            <el-button @click="cancel('确认关闭？')">取消</el-button>
           </el-form-item>
       </el-form>
     </el-dialog>
@@ -116,8 +116,107 @@ export default {
         })
         .catch( ()=> {});
     },
-    onSubmit() {
+    open1() {
+      this.$notify({
+        title: '注册成功',
+        message: '请记住你的账号密码',
+        type: 'success'
+      });
+    },
+    open4(x) {
+      this.$notify.error({
+        title: '注册失败',
+        message: x
+      });
+    },
+    open2() {
+      this.$message({
+        message: '登录成功',
+        type: 'success'
+      });
+    },
+    onSubmit() { 
+      if(this.form.region==''){
+        this.$message.error('请选择你的身份')
+        return 0
+      }
+      if(this.form.name==''){
+        this.$message.error('账号不能为空')
+        return 0
+      }
+      if(this.form.zpw1==''){
+        this.$message.error('密码不能为空')
+        return 0
+      }
+      if(this.form.zpw1 != this.form.zpw2){
+        this.$message.error('两次输入的密码不一致')
+        return 0
+      }
+      if(this.form.region=='student' && this.form.name[0]!='s'){
+        this.$message.error('学生账号必须以s开头')
+        return 0
+      }
+      if(this.form.region=='staff' && this.form.name[0]!='t'){
+        this.$message.error('教职工账号必须以t开头')
+        return 0
+      }
+      if(this.form.region=='repairMan' && this.form.name[0]!='r'){
+        this.$message.error('维修师傅账号必须以r开头')
+        return 0
+      }
       console.log('submit!');
+      let aa=this.form.name
+      let bb=this.form.zpw2
+      let cc=this.form.region
+      axios({
+        method: 'POST',
+        url:'/register',
+        params: {
+            id: aa,
+            pw: bb,
+            sort: cc
+        },
+      }).then(response => {
+        if(response.data=='successful'){
+          this.open1()
+        }
+        if(response.data=='err'){
+          this.open4('已存在该账号')
+        }
+        
+      },()=>{
+        this.open4('数据库连接失败')
+      })
+      console.log(333)
+    },
+    login(){
+      let aa=this.id
+      let bb=this.pw
+      if(aa==''){
+        this.$message.error('请输入账号');
+        return 0
+      }
+      if(bb==''){
+        this.$message.error('请输入密码');
+        return 0
+      }
+      axios({
+      method: 'POST',
+      url:'/login',
+      params: {
+          id: aa,
+          pw: bb,
+      },}).then(response => {
+        if(response.data=='successful'){
+          this.open2()
+        }
+        if(response.data=='err'){
+          this.$message.error('密码错误');
+        }
+        if(response.data=='empty'){
+          this.$message.error('不存在该账号');
+        }
+      })
     }
   }
 }
