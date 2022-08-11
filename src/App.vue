@@ -7,12 +7,12 @@
     <div class="formm">
       <el-input v-model="id" placeholder="请输入账号" id="idd"></el-input>
       <el-input placeholder="请输入密码" v-model="pw" show-password></el-input>
-      <div id="wm"><a>忘记密码?&nbsp;&nbsp;</a></div>
+      <div id="wm"><a href="javascript:void">忘记密码?&nbsp;&nbsp;</a></div>
       <button class="btn-login" >登录</button>
     </div>
     <div class="bott">
-      <a href="">注册账号</a>
-      <a @click="drawer = true">测试账号</a>
+      <a href="javascript:void">注册账号</a>
+      <a @click="drawer = true" @mouseup="pwDrawer">测试账号</a>
       <a href="https://www.yuque.com/docs/share/7e6c1b5d-5487-4c0f-8384-1ea451914d51?# 《课程设计报告》" target="blank">课程设计报告</a>
       <a href="https://element.eleme.cn/#/zh-CN" target="blank">Element UI</a>
     </div>
@@ -21,14 +21,16 @@
       :visible.sync="drawer"
       direction="ltr"
       :before-close="handleClose">
-      <p>我来啦！</p>
+      
+      <p>{{ax}}</p>
     </el-drawer>
   </div>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-
+import axios from 'axios'
+axios.defaults.baseURL = 'http://127.0.0.1:5000/'
 export default {
   name: 'App',
   components: {
@@ -39,7 +41,8 @@ export default {
       id:'',
       pw:'',
       radio:'',
-      drawer: false
+      drawer: false,
+      ax:'我来了！123'
     }
   },
   methods: {
@@ -49,6 +52,14 @@ export default {
           done();
         })
         .catch( ()=> {});
+    },
+    pwDrawer(){
+        // drawer = true
+        console.log('123')
+        axios.get('/').then(res=>{
+          console.log(this)
+          this.ax = res.data
+        })
     }
   }
 }
@@ -107,6 +118,10 @@ export default {
   color: rgb(105, 105, 105);
   text-align: end;
   margin-top: 5px;
+}
+#wm a{
+  text-decoration: none;
+  color: #6f6f6f;
 }
 #wm a:hover{
   color: rgb(73, 73, 73);
