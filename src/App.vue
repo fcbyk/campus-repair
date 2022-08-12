@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-
+    {{width2()}}
     <div class="change-icon">
       <i class="el-icon-setting"></i>
     </div>
@@ -24,7 +24,8 @@
       title="已注册账号"
       :visible.sync="drawer"
       direction="ltr"
-      :before-close="handleClose">
+      :before-close="handleClose"
+      :size="lwidth">
       <div v-for="p in ax" :key="p.id" class="yzc">
         <p>账号:{{p.id}}</p>
         <p>密码:{{p.pw}}</p>
@@ -34,7 +35,7 @@
     <el-dialog
       title="注册账号"
       :visible.sync="dialogVisible"
-      width="30%"
+      :width="lwidth"
       :before-close="cancel">
 
       <el-form ref="form" :model="form" label-width="80px">
@@ -60,14 +61,16 @@
           </el-form-item>
       </el-form>
     </el-dialog>
-
+    <!-- <p>{{width1}}</p> -->
   </div>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
 import axios from 'axios'
-axios.defaults.baseURL = 'http://127.0.0.1:5000/'
+// axios.defaults.baseURL = 'http://127.0.0.1:5000/'
+axios.defaults.baseURL = 'http://fcbyk.com:5000/'
+let width=window.innerWidth
 export default {
   name: 'App',
   components: {
@@ -81,12 +84,14 @@ export default {
       drawer: false,
       ax:'我来了！123',
       dialogVisible: false,
+      lwidth:'30%',
       form: {
           name: '',
           region: '',
           zpw1:'',
           zpw2:'',
-      }
+      },
+      width1:width
     }
   },
   methods: {
@@ -131,7 +136,7 @@ export default {
     },
     open2() {
       this.$message({
-        message: '登录成功',
+        message: '密码正确，但未能跳转，页面开发中',
         type: 'success'
       });
     },
@@ -216,9 +221,19 @@ export default {
         if(response.data=='empty'){
           this.$message.error('不存在该账号');
         }
+      },()=>{
+        this.$message.error('数据库连接失败');
       })
-    }
-  }
+    },
+    width2(){
+      console.log(this.width1)
+      if(this.width1<=900){
+        this.lwidth='90%'
+      }else{
+        this.lwidth='30%'
+      }
+    },
+  },
 }
 </script>
 
@@ -291,6 +306,7 @@ export default {
   margin-left: 10px;
   margin-right: 10px;
   color: #6f6f6f;
+  font-size: 15px;
 }
 .bott a:hover{
   color: rgb(55, 55, 55);
