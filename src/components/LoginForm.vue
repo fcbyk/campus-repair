@@ -3,14 +3,16 @@
         <el-input v-model="id" placeholder="请输入账号" id="idd"></el-input>
         <el-input v-model="pw" placeholder="请输入密码" show-password></el-input>
         <div id="wm"><a href="javascript:void">忘记密码?&nbsp;&nbsp;</a></div>
-        <button class="btn-login" @click="login">登录</button>
+        <router-link :to="address">
+            <button class="btn-login" @click="login">登录</button>
+        </router-link>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
-// axios.defaults.baseURL = 'http://127.0.0.1:5000/'
-axios.defaults.baseURL = 'http://fcbyk.com:5000/'
+axios.defaults.baseURL = 'http://127.0.0.1:5000/'
+// axios.defaults.baseURL = 'http://fcbyk.com:5000/'
 let emptyStr = ''
 export default {
     name:'LoginForm',
@@ -18,6 +20,7 @@ export default {
         return {
             id:emptyStr,
             pw:emptyStr,
+            address:'/home'
         }
     },
     methods:{
@@ -47,6 +50,8 @@ export default {
                 },}).then(response => {
                     if(response.data == 'successful'){
                         this.open2()
+                        // this.address = '/home'
+                        // 存在异步
                     }
                     if(response.data == 'err'){
                         this.$message.error('密码错误')
