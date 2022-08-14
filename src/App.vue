@@ -5,11 +5,17 @@
 </template>
 
 <script>
+// import router from './router'
 // import Login from './pages/Login'
 
 export default {
   name: 'App',
   // components: {Login}
+  // mounted(){
+  //   // console.log('app组件创建成功'+Math.random())
+  //   // 刷新一次创建一次
+  //   // router.replace('/login')
+  // }
 }
 </script>
 
