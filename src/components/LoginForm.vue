@@ -24,7 +24,7 @@ export default {
     methods:{
         open2() {
             this.$message({
-                message: '密码正确，但未能跳转，页面开发中',
+                message: '登录成功',
                 type: 'success'
             })
         },

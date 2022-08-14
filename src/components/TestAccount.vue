@@ -53,4 +53,7 @@ export default {
   padding: 10px;
   border-radius: 10px;
 }
+p{
+  margin: 10px;
+}
 </style>
