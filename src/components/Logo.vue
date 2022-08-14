@@ -23,4 +23,7 @@ export default {
     .change-icon{
         font-size:50px;
     }
+    p{
+      margin: 16px 0px;
+    }
 </style>

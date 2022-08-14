@@ -50,6 +50,7 @@ export default {
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    margin-top: 60px;
 }
 .bott{
   margin-top: 100px;
