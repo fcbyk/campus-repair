@@ -47,6 +47,7 @@ export default {
                     pw: bb,
                 },}).then(response => {
                     if(response.data == 'successful'){
+                        sessionStorage.setItem('id',this.id)
                         this.open2()
                         router.push('/home')
                     }
