@@ -17,8 +17,8 @@
 
 <script>
 import axios from 'axios'
-axios.defaults.baseURL = 'http://127.0.0.1:5000/'
-// axios.defaults.baseURL = 'http://fcbyk.com:5000/'
+// axios.defaults.baseURL = 'http://127.0.0.1:5000/'
+axios.defaults.baseURL = 'http://fcbyk.com:5000/'
 let width=window.innerWidth
 export default {
     name:'TestAccount',
@@ -39,7 +39,7 @@ export default {
             }).catch( () => {});
         },
         pwDrawer(){
-            axios.get('/').then(res=>{
+            axios.get('/test').then(res=>{
                 this.ax = res.data
         })}
     }
