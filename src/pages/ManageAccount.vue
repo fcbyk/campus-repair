@@ -59,7 +59,7 @@ export default {
           resource: '男',
           desc: '',
           phone: '10086',
-          addr:''
+          addr:'热海大1b-501'
         },
         state:true
       }
