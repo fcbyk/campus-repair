@@ -26,7 +26,7 @@ export default {
     box-sizing: border-box;
   }
   .aside,.main{
-    background-color: aquamarine;
+    background-color: rgb(242, 242, 242);
     height: 100vh;
   }
 </style>

@@ -40,7 +40,7 @@ export default {
         console.log(key, keyPath);
       },
       tonew(x){
-        router.push(x)
+        router.replace(x)
       }
     }
 }

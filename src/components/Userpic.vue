@@ -1,13 +1,21 @@
 <template>
   <div class='user'>
-    <p>用户头像</p>
-    <p>名字</p>
+    <div>
+      <el-avatar :src="circleUrl" :size="150"></el-avatar>
+    </div>
+    <p>{{name}}</p>
   </div>
 </template>
 
 <script>
 export default {
-    name:'Userpic'
+    name:'Userpic',
+    data() {
+      return {
+        name:sessionStorage.getItem('id'),
+        circleUrl: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
+      }
+    },
 }
 </script>
 
@@ -23,5 +31,10 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+  }
+  p{
+    font-size: 20px;
+    margin-top: 10px;
+    font-weight: 550;
   }
 </style>
