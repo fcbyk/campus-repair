@@ -4,10 +4,16 @@ import OrderManagement from '../pages/OrderManagement'
 import NewOrder from '../pages/NewOrder'
 import Search from '../pages/Search'
 import ManageAccount from '../pages/ManageAccount'
+import Phone from '../pages/Phone'
 import VueRouter from 'vue-router'
 
 export default new VueRouter({
     routes:[
+        {
+            path:'/phone',
+            name:'phone',
+            component:Phone
+        },
         {
             path:'/',
             name:'login',

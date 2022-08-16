@@ -11,13 +11,13 @@ Vue.config.productionTip = false
 
 Vue.use(ElementUI)	// 使用ElementUI
 
-router.beforeEach((to,from,next) => {
-  if(to.name !== 'login' && sessionStorage.getItem('id') == null ){
-    next({ name:'login'})
-  }else{
-    next()
-  }
-})
+// router.beforeEach((to,from,next) => {
+//   if(to.name !== 'login' && sessionStorage.getItem('id') == null ){
+//     next({ name:'login'})
+//   }else{
+//     next()
+//   }
+// })
 
 new Vue({
   render: h => h(App),
