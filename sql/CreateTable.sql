@@ -26,31 +26,6 @@ show create table register;
 insert into register values('s123','123456','student');
 select * from register;
 
-create table student(
-	sid varchar(20) primary key,
-    sname varchar(20) default '新用户',
-    gender char check(gender in('男','女')),
-    phone varchar(20) default '未绑定'
-);
-
-insert into student(sid) value('s123');
-select * from student;
-
-create table staff(
-    tid varchar(20) primary key,
-    tname varchar(20) default '新用户',
-    gender char check(gender in('男','女')),
-    phone varchar(20) default '未绑定'
-);
-
-create table repairMan(
-    rid varchar(20) primary key,
-    rsort varchar(20),
-    rname varchar(20) default '新用户',
-    gender char check(gender in('男','女')),
-    phone varchar(20) default '未绑定'
-);
-
 create table repair_order(
 	rnumber varchar(20) primary key,
     rsort varchar(20) not null,
@@ -63,7 +38,7 @@ create table repair_order(
 );
 
 TRUNCATE TABLE register;
-TRUNCATE TABLE student;
+TRUNCATE TABLE user_information;
 select pw from register where id='123';
 
 DELIMITER //
@@ -99,3 +74,14 @@ select user_id as rid, user_name as rname, user_gender as gender,user_phone as p
 from user_information where user_sort='repairMan';
 
 select * from student_information;
+
+DELIMITER //
+create trigger delete_user
+after delete on register 
+for each row
+begin
+delete from user_information where user_id = old.id;
+end //
+DELIMITER ;
+
+delete from register where id='s123';

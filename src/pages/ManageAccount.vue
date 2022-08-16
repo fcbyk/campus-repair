@@ -6,9 +6,9 @@
         
       </div>
       <div class="ma-toptwo">
-        <el-form ref="form" :model="sizeForm" label-width="40px" size="mini">
+        <el-form ref="form" :model="user" label-width="40px" size="mini">
           <el-form-item label="名字">
-            <el-input size="mini" v-model="sizeForm.name" :disabled="state"></el-input>
+            <el-input size="mini" v-model="user.name" :disabled="state"></el-input>
           </el-form-item>
           <el-form-item label="id">
             {{name}}
@@ -18,18 +18,18 @@
     </div>
 
     <div class="ma-bott">
-      <el-form ref="form" :model="sizeForm" label-width="80px" size="medium">
+      <el-form ref="form" :model="user" label-width="80px" size="medium">
         <el-form-item label="性别">
-          <el-radio-group v-model="sizeForm.resource" size="medium">
+          <el-radio-group v-model="user.gender" size="medium">
             <el-radio border label="男" :disabled="state"></el-radio>
             <el-radio border label="女" :disabled="state"></el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="联系电话" style="width: 300px;">
-          <el-input v-model="sizeForm.phone" :disabled="state"></el-input>
+          <el-input v-model="user.phone" :disabled="state"></el-input>
         </el-form-item>
         <el-form-item label="默认地址" style="width: 500px;">
-          <el-input v-model="sizeForm.addr" :disabled="state"></el-input>
+          <el-input v-model="user.addr" :disabled="state"></el-input>
         </el-form-item>
         <div style="height: 100px;"></div>
         <el-form-item size="medium">
@@ -43,26 +43,38 @@
 </template>
 
 <script>
+import axios from 'axios'
+axios.defaults.baseURL = 'http://127.0.0.1:5000/'
+// axios.defaults.baseURL = 'http://fcbyk.com:5000/'
+
 export default {
     name:'ManageAccount',
     data() {
       return {
         name:sessionStorage.getItem('id'),
         circleUrl: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-        sizeForm:{
-          name:'蓝忘机',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '男',
-          desc: '',
-          phone: '10086',
-          addr:'热海大1b-501'
+        user:{
+          name:'',
+          gender: '',
+          phone: '',
+          addr:''
         },
         state:true
       }
+    },
+    mounted() {
+        axios({
+              method: 'POST',
+              url:'/user',
+              params: {
+                  id: sessionStorage.getItem('id'),
+              },
+          }).then(response => {
+              console.log(response.data)
+              this.user.name = response.data[0].user_name
+              this.user.gender = response.data[0].user_gender
+              this.user.phone = response.data[0].user_phone
+          }) 
     },
     methods:{
       alter(){
@@ -70,8 +82,41 @@ export default {
       },
       confirm(){
         this.state = true
+        axios({
+              method: 'POST',
+              url:'/alter-user',
+              params: {
+                  id: sessionStorage.getItem('id'),
+                  name:this.user.name,
+                  gender:this.user.gender,
+                  phone:this.user.phone,
+              },
+          }).then(response => {
+              if(response.data == 'successful'){
+                  this.$message({
+                      message: '修改成功',
+                      type: 'success'
+                  })
+              }
+          },()=>{
+            this.$message.error('数据库连接失败')
+          })
+      },
+      user_info(){
+        axios({
+              method: 'POST',
+              url:'/user',
+              params: {
+                  id: sessionStorage.getItem('id'),
+              },
+          }).then(response => {
+              console.log(response.data)
+              this.user.name = response.data[0].user_name
+              this.user.gender = response.data[0].user_gender
+              this.user.phone = response.data[0].user_phone
+          })
       }
-    }
+    },
 }
 </script>
 

@@ -8,8 +8,9 @@
       :before-close="handleClose"
       :size="cwidth">
       <div v-for="p in ax" :key="p.id" class="list">
-        <p>账号:{{p.id}}</p>
-        <p>密码:{{p.pw}}</p>
+        <p>名字: {{p.name}}</p>
+        <p>账号: {{p.id}}</p>
+        <p>密码: {{p.pw}}</p>
       </div>
     </el-drawer>
   </span>
@@ -17,8 +18,8 @@
 
 <script>
 import axios from 'axios'
-// axios.defaults.baseURL = 'http://127.0.0.1:5000/'
-axios.defaults.baseURL = 'http://fcbyk.com:5000/'
+axios.defaults.baseURL = 'http://127.0.0.1:5000/'
+// axios.defaults.baseURL = 'http://fcbyk.com:5000/'
 let width=window.innerWidth
 export default {
     name:'TestAccount',
