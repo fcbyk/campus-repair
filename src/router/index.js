@@ -7,12 +7,33 @@ import ManageAccount from '../pages/ManageAccount'
 import Phone from '../pages/Phone'
 import VueRouter from 'vue-router'
 
+import PhoneNewOrder from '../pages/phone/PhoneNewOrder'
+import PhoneManageAccount from '../pages/phone/PhoneManageAccount'
+
 export default new VueRouter({
     routes:[
         {
             path:'/phone',
             name:'phone',
-            component:Phone
+            component:Phone,
+            children:[
+                {
+                    path:'new-order',
+                    component:PhoneNewOrder
+                },
+                {
+                    path:'order-management',
+                    component:PhoneNewOrder
+                },
+                {
+                    path:'search',
+                    component:PhoneNewOrder
+                },
+                {
+                    path:'manage-account',
+                    component:PhoneManageAccount
+                }
+            ]
         },
         {
             path:'/',
