@@ -1,8 +1,11 @@
 <template>
   <div class="all">
     <div class="photo">
-        <div @click="alter">
-          <el-avatar :src="circleUrl" :size="150"></el-avatar>
+        <div >
+          <span @click="alter">
+            <el-avatar :src="circleUrl" :size="150" ></el-avatar>
+          </span>
+          
         </div>
         <div>
           <p class="name">{{user.name}}</p>
@@ -13,7 +16,47 @@
     <div class="card">
       <div class="card-top">
         <p>基本信息</p>
-        <p class='alter'>修改</p>
+        <p class='alter'  @click="dialogVisible2 = true">修改</p>
+
+        <el-dialog
+          :visible.sync="dialogVisible2"
+          :fullscreen='true'
+          title="修改个人信息"
+          :show-close='false'
+          >
+        <el-form ref="user" :model="user" label-width="70px">
+          <el-form-item label="ID" >
+            <el-input v-model="id" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="名字">
+            <el-input v-model="user.name"></el-input>
+          </el-form-item>
+          <el-form-item label="人员类别">
+            <el-select v-model="user.sort" placeholder="请选择类别" disabled>
+              <el-option label="学生" value="student"></el-option>
+              <el-option label="教职工" value="staff"></el-option>
+              <el-option label="维修师傅" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="性别">
+            <el-select v-model="user.gender" placeholder="请选择性别">
+              <el-option label="男" value="男"></el-option>
+              <el-option label="女" value="女"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="联系电话">
+            <el-input v-model="user.phone"></el-input>
+          </el-form-item>
+          <el-form-item label="默认地址">
+            <el-input type="textarea" v-model="user.addr"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="confirm">修改</el-button>
+            <el-button @click="dialogVisible2 = false">取消</el-button>
+          </el-form-item>
+        </el-form>
+        </el-dialog>
+
       </div>
       <hr>
       <div class="card-bot">
@@ -25,16 +68,37 @@
         <p>常用地址：{{user.addr}}</p>
       </div>
     </div>
-    <div class="log-out">
-      <el-button type="warning">修改密码</el-button>
-      <el-button type="danger">退出登录</el-button>
+      <div class="log-out">
+      <el-button type="info" icon="el-icon-more" @click="dialogVisible = true"></el-button>
+      <el-button type="info" @click="logout">退出登录</el-button>
     </div>
-    
+
+    <el-dialog
+      :visible.sync="dialogVisible"
+      width="70%"
+      :show-close='false'
+      custom-class='menudialog'
+      top='30vh'
+      >
+      <div class="dia">
+        <div class="change-icon">
+          <i class="el-icon-setting"></i>
+        </div>
+        <p class="hh">热海大报修系统</p>
+        <p class="tt">系统版本号：v0.1.0</p>
+        <p class="tt">最近一次更新时间：2022-08-17</p>
+        <div class="aa">
+          <a href="javaScript:void(0) ">bug反馈</a>
+          <a href="javaScript:void(0) ">联系我们</a>
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import router from '@/router'
 axios.defaults.baseURL = 'http://192.168.31.215:5000/'
 // axios.defaults.baseURL = 'http://fcbyk.com:5000/'
 export default {
@@ -44,13 +108,15 @@ export default {
         id:sessionStorage.getItem('id'),
         circleUrl: `https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fspider.nosdn.127.net%2F399b6ac1db4ba51e476d94fc859df37f.jpeg&refer=http%3A%2F%2Fspider.nosdn.127.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1663262874&t=db0b7e9fec0ed51ef60040cb7a47559e`,
         user:{
-          name:'',
+          name:'新用户',
           gender: '',
           phone: '',
-          addr:'',
+          addr:'数据库暂未存有常用地址数据',
           sort:''
         },
-        state:true
+        state:true,
+        dialogVisible:false,
+        dialogVisible2:false,
       }
     },
     mounted() {
@@ -61,10 +127,12 @@ export default {
                   id: sessionStorage.getItem('id'),
               },
           }).then(response => {
-              console.log(response.data)
+              // console.log(response.data)
               this.user.name = response.data[0].user_name
               this.user.gender = response.data[0].user_gender
               this.user.phone = response.data[0].user_phone
+              this.user.sort = response.data[0].user_sort
+              this.user.addr = response.data[0].user_addr
           }) 
     },
     methods:{
@@ -84,6 +152,7 @@ export default {
                   name:this.user.name,
                   gender:this.user.gender,
                   phone:this.user.phone,
+                  addr:this.user.addr
               },
           }).then(response => {
               if(response.data == 'successful'){
@@ -108,7 +177,25 @@ export default {
               this.user.name = response.data[0].user_name
               this.user.gender = response.data[0].user_gender
               this.user.phone = response.data[0].user_phone
+              this.user.sort = response.data[0].user_sort
           })
+      },
+      logout(){
+        this.$confirm(this.user.name+'，您要下线了吗','',{
+                customClass:'message'
+            }).then( () => {
+                router.replace('/')
+                sessionStorage.clear()
+            }).catch( () => {});
+      },
+      handleClose(done) {
+        this.$confirm('确认关闭？',{
+          customClass:'message'
+        })
+          .then(() => {
+            done();
+          })
+          .catch(() => {});
       }
     },
 }
@@ -165,8 +252,44 @@ hr{
   color: #409EFF;
 }
 .log-out{
-  text-align: center;
-  /* padding-right: 20px; */
+  text-align: end;
+  padding-right: 30px;
   padding-top: 20px;
+}
+.change-icon{
+  font-size:80px;
+}
+.hh{
+  margin: 5px 0px;
+  font-size: 16px;
+  /* font-weight: bold; */
+}
+.tt{
+  font-size: 12px;
+}
+.aa a{
+  text-decoration: none;
+  color: #409EFF;
+  font-size: 11px;
+  margin: 0px 5px;
+}
+.aa{
+  margin-top: 5px;
+}
+</style>
+
+<style>
+.menudialog{
+  /* background-color: aquamarine; */
+  border-radius: 10px;
+  padding: 0;
+}
+.dia{
+  /* background-color: bisque; */
+  border-radius: 10px;
+  height: 210px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 </style>

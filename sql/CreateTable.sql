@@ -12,7 +12,8 @@ create table user_information(
     user_name varchar(20) default '新用户',
     user_gender char check(user_gender in('男','女')),
     user_phone varchar(20) default '未绑定',
-    user_sort varchar(10) check(user_sort in('student','staff','repairMan')) not null
+    user_sort varchar(10) check(user_sort in('student','staff','repairMan')) not null,
+    user_addr varchar(50) default '未填写'
 );
 
 create table register(

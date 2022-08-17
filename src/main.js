@@ -9,7 +9,8 @@ Vue.use(VueRouter)
 import { 
   Dialog,Form,Input,Drawer,Message,
   MessageBox,Button,Select,Tag,
-  Avatar,Empty,FormItem,Option,Notification} from 'element-ui'	// 按需引入
+  Avatar,Empty,FormItem,Option,Notification,Radio,
+  Checkbox} from 'element-ui'	// 按需引入
 
 Vue.use(Dialog)
 Vue.use(Form)
@@ -22,6 +23,8 @@ Vue.use(Avatar)
 Vue.use(Empty)
 Vue.use(FormItem)
 Vue.use(Option)
+Vue.use(Radio)
+Vue.use(Checkbox)
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
 Vue.prototype.$notify = Notification

@@ -39,8 +39,15 @@
 import router from '@/router';
 export default {
     name:'Phone',
+    data() {
+      return {
+        to:'',
+      }
+    },
     methods:{
       tonew(x){
+        if(x==this.to) return 0
+        this.to=x
         router.replace(x)
       }
     }

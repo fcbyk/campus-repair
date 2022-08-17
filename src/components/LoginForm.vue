@@ -49,7 +49,7 @@ export default {
                     if(response.data == 'successful'){
                         sessionStorage.setItem('id',this.id)
                         this.open2()
-                        router.replace('/phone')
+                        router.replace('/phone/new-order')
                     }
                     if(response.data == 'err'){
                         this.$message.error('密码错误')
