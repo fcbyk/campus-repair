@@ -77,7 +77,6 @@ export default {
 }
 .content{
     height: 84vh;
-    /* width: 100%; */
     background-color:burlywood;
     border-radius: 10px;
     margin: 10px;
@@ -89,7 +88,6 @@ export default {
 }
 .nav{
     height: 10vh;
-    /* width: 100%; */
     background-color: aquamarine;
     border-radius: 10px;
     margin: 10px;
@@ -106,13 +104,11 @@ export default {
     width:100%;
     position: relative;
     z-index: 1;
-    /* cursor: pointer; */
     display: flex;
     justify-content: center;
     align-content: center;
     flex-direction: column;
     padding: 10px;
-    /* border: #333 solid 2px; */
     color: #333;
 }
 .nav label p{
@@ -169,8 +165,6 @@ export default {
 }
 .icc{
   font-size: 30px;
-  /* color: aliceblue; */
-  /* background-color: #f09819; */
   text-align: center;
 }
 }

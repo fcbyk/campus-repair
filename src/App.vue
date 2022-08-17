@@ -5,17 +5,9 @@
 </template>
 
 <script>
-// import router from './router'
-// import Login from './pages/Login'
 
 export default {
   name: 'App',
-  // components: {Login}
-  // mounted(){
-  //   // console.log('app组件创建成功'+Math.random())
-  //   // 刷新一次创建一次
-  //   // router.replace('/login')
-  // }
 }
 </script>
 
@@ -23,10 +15,8 @@ export default {
 *{
   margin: 0;
   padding: 0;
-  /* box-sizing: border-box; */
 }
 #app {
-  /* font-family: Avenir, Helvetica, Arial, sans-serif; */
   font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
