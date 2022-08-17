@@ -10,7 +10,7 @@
 <script>
 import axios from 'axios'
 import router from '@/router'
-axios.defaults.baseURL = 'http://127.0.0.1:5000/'
+axios.defaults.baseURL = 'http://192.168.31.215:5000/'
 // axios.defaults.baseURL = 'http://fcbyk.com:5000/'
 let emptyStr = ''
 export default {
