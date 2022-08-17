@@ -21,4 +21,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.message{
+  width: 300px;
+}
 </style>
