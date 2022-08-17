@@ -66,4 +66,7 @@ export default {
   color: rgb(55, 55, 55);
   text-decoration-line: underline;
 }
+.message{
+  width: 300px;
+}
 </style>
