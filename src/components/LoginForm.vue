@@ -48,6 +48,7 @@ export default {
                 },}).then(response => {
                     if(response.data == 'successful'){
                         sessionStorage.setItem('id',this.id)
+                        this.beforelogin()
                         this.open2()
                         router.replace('/phone/new-order')
                     }
@@ -60,6 +61,21 @@ export default {
                 },()=>{
                     this.$message.error('数据库连接失败')
             })
+        },
+        beforelogin() {
+            axios({
+                method: 'POST',
+                url:'/user',
+                params: {
+                    id: this.id,
+                },
+            }).then(response => {
+                sessionStorage.setItem('name',response.data[0].user_name)
+                sessionStorage.setItem('gender',response.data[0].user_gender)
+                sessionStorage.setItem('phone',response.data[0].user_phone)
+                sessionStorage.setItem('sort',response.data[0].user_sort)
+                sessionStorage.setItem('addr',response.data[0].user_addr)
+            }) 
         },
     }
 }

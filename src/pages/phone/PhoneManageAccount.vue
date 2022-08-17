@@ -108,34 +108,33 @@ export default {
         id:sessionStorage.getItem('id'),
         circleUrl: `https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fspider.nosdn.127.net%2F399b6ac1db4ba51e476d94fc859df37f.jpeg&refer=http%3A%2F%2Fspider.nosdn.127.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1663262874&t=db0b7e9fec0ed51ef60040cb7a47559e`,
         user:{
-          name:'新用户',
-          gender: '',
-          phone: '',
-          addr:'数据库暂未存有常用地址数据',
-          sort:''
+          name: sessionStorage.getItem('name'),
+          gender:  sessionStorage.getItem('gender'),
+          phone:  sessionStorage.getItem('phone'),
+          addr: sessionStorage.getItem('addr'),
+          sort:  sessionStorage.getItem('sort')
         },
         state:true,
         dialogVisible:false,
         dialogVisible2:false,
       }
     },
-    mounted() {
-        axios({
-              method: 'POST',
-              url:'/user',
-              params: {
-                  id: sessionStorage.getItem('id'),
-              },
-          }).then(response => {
-              // console.log(response.data)
-              this.user.name = response.data[0].user_name
-              this.user.gender = response.data[0].user_gender
-              this.user.phone = response.data[0].user_phone
-              this.user.sort = response.data[0].user_sort
-              this.user.addr = response.data[0].user_addr
-          }) 
-    },
     methods:{
+      beforelogin() {
+            axios({
+                method: 'POST',
+                url:'/user',
+                params: {
+                    id: sessionStorage.getItem('id'),
+                },
+            }).then(response => {
+                sessionStorage.setItem('name',response.data[0].user_name)
+                sessionStorage.setItem('gender',response.data[0].user_gender)
+                sessionStorage.setItem('phone',response.data[0].user_phone)
+                sessionStorage.setItem('sort',response.data[0].user_sort)
+                sessionStorage.setItem('addr',response.data[0].user_addr)
+            }) 
+      },
       alter(){
         this.$message({
           showClose: true,
@@ -156,6 +155,8 @@ export default {
               },
           }).then(response => {
               if(response.data == 'successful'){
+                  this.beforelogin() 
+                  this.dialogVisible2 = false
                   this.$message({
                       message: '修改成功',
                       type: 'success'
