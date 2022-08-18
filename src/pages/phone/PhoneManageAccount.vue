@@ -62,7 +62,7 @@
       <div class="card-bot">
         <p>id：{{id}}</p>
         <p>姓名：{{user.name}}</p>
-        <p>人员类别：{{user.sort}}</p>
+        <p>人员类别：{{tag1}}</p>
         <p>性别：{{user.gender}}</p>
         <p>联系电话：{{user.phone}}</p>
         <p>常用地址：{{user.addr}}</p>
