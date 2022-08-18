@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 
 import PhoneNewOrder from '../pages/phone/PhoneNewOrder'
 import PhoneManageAccount from '../pages/phone/PhoneManageAccount'
+import PhoneOrderManagement from '../pages/phone/PhoneOrderManagement'
 
 export default new VueRouter({
     routes:[
@@ -23,11 +24,11 @@ export default new VueRouter({
                 },
                 {
                     path:'order-management',
-                    component:PhoneNewOrder
+                    component:PhoneOrderManagement
                 },
                 {
                     path:'search',
-                    component:PhoneNewOrder
+                    component:PhoneOrderManagement
                 },
                 {
                     path:'manage-account',

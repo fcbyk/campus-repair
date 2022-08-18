@@ -9,7 +9,7 @@
         </div>
         <div>
           <p class="name">{{user.name}}</p>
-          <el-tag class="tag">学生</el-tag>
+          <el-tag class="tag">{{tag1}}</el-tag>
           <el-tag type="success" class="tag">新用户</el-tag>
         </div>
     </div>
@@ -117,6 +117,16 @@ export default {
         state:true,
         dialogVisible:false,
         dialogVisible2:false,
+        tag1:''
+      }
+    },
+    mounted(){
+      if(this.user.sort=='student'){
+        this.tag1='学生'
+      }else if(this.user.sort=='staff'){
+        this.tag1='教职工'
+      }else{
+        this.tag1='维修师傅'
       }
     },
     methods:{

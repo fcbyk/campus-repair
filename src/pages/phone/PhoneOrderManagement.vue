@@ -6,7 +6,8 @@
 
 <script>
 export default {
-    name:'PhoneNewOrder',
+    name:'PhoneOrderManagement',
+
 }
 </script>
 
