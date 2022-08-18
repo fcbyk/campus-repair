@@ -20,7 +20,7 @@
         </label>
         <label for="comment" class="comment" @click="tonew('/phone/order-management')">
           <div class="icc"><i class="el-icon-document"></i></div>
-          <p slot="title">订单管理</p>
+          <p slot="title">故障单</p>
         </label>
         <label for="envelope" class="envelope" @click="tonew('/phone/search')">
           <div class="icc"><i class="el-icon-search"></i></div>
