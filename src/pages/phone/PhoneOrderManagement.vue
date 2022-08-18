@@ -3,23 +3,33 @@
     <el-tabs v-model="activeName" type="border-card">
       <el-tab-pane label="派送中" name="first">
         <el-table
-          :data="tableData"
+          :data="tableData1"
           style="width: 100%"
           size="medium"
           >
           <el-table-column
             label="故障单号">
             <template slot-scope="scope">
-              <span>{{ scope.row.date }}</span>
+              <span>{{ scope.row.rnumber }}</span>
             </template>
           </el-table-column>
 
           <el-table-column
             label="维修类别">
             <template slot-scope="scope">
-              <el-popover trigger="hover" placement="top">
-                <p>姓名: {{ scope.row.name }}</p>
-                <p>住址: {{ scope.row.address }}</p>
+              <span>{{ scope.row.rsort }}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            label="故障设备">
+            <template slot-scope="scope">
+              <el-popover placement="top">
+              <el-button
+                size="mini"
+                @click="handleEdit(scope.$index, scope.row)"
+                type="primary"
+                >详细</el-button>
               <el-button
                 size="mini"
                 @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -28,25 +38,104 @@
                 type="danger"
                 @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                 <div slot="reference" class="name-wrapper">
-                  <span>{{ scope.row.name }}</span>
+                  <span>{{ scope.row.f_equ }}</span>
                 </div>
               </el-popover>
+            </template>
+          </el-table-column>
+        </el-table>
+        <div class="refresh"><el-button size="medium" @click="refresh">刷新</el-button></div>
+      </el-tab-pane>
+
+      <el-tab-pane label="已接单" name="second">
+        <el-table
+          :data="tableData2"
+          style="width: 100%"
+          size="medium"
+          >
+          <el-table-column
+            label="故障单号">
+            <template slot-scope="scope">
+              <span>{{ scope.row.rnumber }}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            label="维修类别">
+            <template slot-scope="scope">
+              <span>{{ scope.row.rsort }}</span>
             </template>
           </el-table-column>
 
           <el-table-column
             label="故障设备">
             <template slot-scope="scope">
-              <span>{{ scope.row.address }}</span>
+              <el-popover placement="top">
+              <el-button
+                size="mini"
+                @click="handleEdit(scope.$index, scope.row)"
+                type="primary"
+                >详细</el-button>
+              <el-button
+                size="mini"
+                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              <el-button
+                size="mini"
+                type="danger"
+                @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                <div slot="reference" class="name-wrapper">
+                  <span>{{ scope.row.f_equ }}</span>
+                </div>
+              </el-popover>
             </template>
           </el-table-column>
         </el-table>
-
-
       </el-tab-pane>
 
-      <el-tab-pane label="已接单" name="second">配置管理</el-tab-pane>
-      <el-tab-pane label="已完成" name="third">角色管理</el-tab-pane>
+      <el-tab-pane label="已完成" name="third">
+        <el-table
+          :data="tableData3"
+          style="width: 100%"
+          size="medium"
+          >
+          <el-table-column
+            label="故障单号">
+            <template slot-scope="scope">
+              <span>{{ scope.row.rnumber }}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            label="维修类别">
+            <template slot-scope="scope">
+              <span>{{ scope.row.rsort }}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            label="故障设备">
+            <template slot-scope="scope">
+              <el-popover placement="top">
+              <el-button
+                size="mini"
+                @click="handleEdit(scope.$index, scope.row)"
+                type="primary"
+                >详细</el-button>
+              <el-button
+                size="mini"
+                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              <el-button
+                size="mini"
+                type="danger"
+                @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                <div slot="reference" class="name-wrapper">
+                  <span>{{ scope.row.f_equ }}</span>
+                </div>
+              </el-popover>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -57,50 +146,37 @@ export default {
     data() {
       return {
         activeName: 'first',
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
+        tableData1: [{
+          rnumber: '00001',
+          rsort: '后勤维修',
+          f_equ: '插座'
         }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
+          rnumber: '00002',
+          rsort: '空调维修',
+          f_equ: '寝室空调'
         }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        },{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }]
+          rnumber: '00003',
+          rsort: '水表，一卡通',
+          f_equ: '热水读卡器'
+        }],
+        tableData2: [],
+        tableData3: []
       }
     },
     methods: {
-      // handleClick(tab, event) {
-      //   console.log(tab, event);
-      // }
       handleEdit(index, row) {
         console.log(index, row);
       },
       handleDelete(index, row) {
         console.log(index, row);
+        this.$confirm("确定删除吗",{ 
+          customClass:'message'
+        }).then(()=>{
+          this.tableData1.splice(index,1)
+        },()=>{})
+      },
+      refresh(){
+        this.$message.success('刷新成功')
       }
     }
 }
@@ -116,5 +192,9 @@ export default {
 .el-tabs--border-card{
   box-shadow: none;
   border: none;
+}
+.refresh{
+  margin: 10px 30px 0px 0px;
+  text-align: end;
 }
 </style>
