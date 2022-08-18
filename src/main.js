@@ -10,8 +10,14 @@ import {
   Dialog,Form,Input,Drawer,Message,
   MessageBox,Button,Select,Tag,
   Avatar,Empty,FormItem,Option,Notification,Radio,
-  Checkbox,Col,DatePicker,TimePicker} from 'element-ui'	// 按需引入
+  Checkbox,Col,DatePicker,TimePicker,Tabs,TabPane,
+  Table,TableColumn,Popover} from 'element-ui'	// 按需引入
 
+Vue.use(Popover)
+Vue.use(TableColumn)
+Vue.use(Table)
+Vue.use(TabPane)
+Vue.use(Tabs)
 Vue.use(TimePicker)
 Vue.use(DatePicker)
 Vue.use(Col)
