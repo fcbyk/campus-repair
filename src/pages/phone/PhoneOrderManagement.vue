@@ -1,7 +1,7 @@
 <template>
   <div class="ordermanage">
     <el-tabs v-model="activeName" type="border-card">
-      <el-tab-pane label="派送中" name="first">
+      <el-tab-pane label="推送中" name="first">
         <el-table
           :data="tableData1"
           style="width: 100%"
@@ -141,27 +141,23 @@
 </template>
 
 <script>
+import axios from 'axios'
+axios.defaults.baseURL = 'http://192.168.31.215:5000/'
+// axios.defaults.baseURL = 'http://fcbyk.com:5000/'
 export default {
     name:'PhoneOrderManagement',
     data() {
       return {
         activeName: 'first',
-        tableData1: [{
-          rnumber: '00001',
-          rsort: '后勤维修',
-          f_equ: '插座'
-        }, {
-          rnumber: '00002',
-          rsort: '空调维修',
-          f_equ: '寝室空调'
-        }, {
-          rnumber: '00003',
-          rsort: '水表，一卡通',
-          f_equ: '热水读卡器'
-        }],
+        tableData1: [],
         tableData2: [],
         tableData3: []
       }
+    },
+    mounted(){
+      this.tableData1 = JSON.parse(sessionStorage.getItem('push'))
+      this.tableData2 = JSON.parse(sessionStorage.getItem('receiving'))
+      this.tableData3 = JSON.parse(sessionStorage.getItem('finished'))
     },
     methods: {
       handleEdit(index, row) {
@@ -172,12 +168,44 @@ export default {
         this.$confirm("确定删除吗",{ 
           customClass:'message'
         }).then(()=>{
+          this.deletethis(row.rnumber)
           this.tableData1.splice(index,1)
+          sessionStorage.setItem('push',JSON.stringify(this.tableData1))
         },()=>{})
       },
       refresh(){
-        this.$message.success('刷新成功')
-      }
+        this.$message.success({
+          showClose:true,
+          message:'刷新成功'
+        })
+        axios({
+              method: 'POST',
+              url:'/getpush',
+              params: {
+                  id: sessionStorage.getItem('id'),
+              },
+          }).then(response => {
+            sessionStorage.setItem('push',JSON.stringify(response.data))
+            this.tableData1 = JSON.parse(sessionStorage.getItem('push'))
+          },()=>{
+            this.$message.error('数据库连接失败')
+          })
+      },
+      deletethis(x){
+        axios({
+              method: 'POST',
+              url:'/deletethis',
+              params: {
+                  number: x,
+              },
+          }).then(response => {
+            if(response.data == 'successful'){
+              this.$message.success('删除成功')
+            }
+          },()=>{
+            this.$message.error('数据库连接失败')
+          })
+      },
     }
 }
 </script>

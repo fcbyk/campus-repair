@@ -114,7 +114,15 @@ export default {
           equ:  '',
           addr: '',
           note: '',
+          date1:'',
+          date2:''
         },
+        ax:'',
+        bx:'',
+        cx:'',
+        dx:'',
+        ex:'',
+        fx:''
       }
     },
     mounted(){

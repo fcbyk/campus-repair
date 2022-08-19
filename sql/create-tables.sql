@@ -27,8 +27,8 @@ create table repair_order(
     rid varchar(20),
     note varchar(100),
     order_state varchar(10) 
-    check(order_state in('派送中','以接单','已完成'))
-    default '派送中'
+    check(order_state in('推送中','已接单','已完成'))
+    default '推送中'
 );
 
 -- 创建维修人员类别表

@@ -6,7 +6,7 @@
       <p>以触发CSS渲染画面</p>
     </div>
     <div class="content">
-      <router-view></router-view>
+        <router-view></router-view>
     </div>
     <div class="nav">
         <input type="radio" name="tab" id="home" checked  @click="tonew('/phone/new-order')">

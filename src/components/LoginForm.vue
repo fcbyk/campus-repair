@@ -22,6 +22,39 @@ export default {
         }
     },
     methods:{
+        getpush(){
+            axios({
+                method: 'POST',
+                url:'/getpush',
+                params: {
+                    id: sessionStorage.getItem('id'),
+                },
+            }).then(response => {
+                sessionStorage.setItem('push',JSON.stringify(response.data))
+            },()=>{})
+        },
+        getreceiving(){
+            axios({
+                method: 'POST',
+                url:'/getreceiving',
+                params: {
+                    id: sessionStorage.getItem('id'),
+                },
+            }).then(response => {
+                sessionStorage.setItem('receiving',JSON.stringify(response.data))
+            },()=>{})
+        },
+        getfinished(){
+            axios({
+                method: 'POST',
+                url:'/getfinished',
+                params: {
+                    id: sessionStorage.getItem('id'),
+                },
+            }).then(response => {
+                sessionStorage.setItem('finished',JSON.stringify(response.data))
+            },()=>{})
+        },
         open2() {
             this.$message({
                 message: '登录成功',
@@ -49,6 +82,9 @@ export default {
                     if(response.data == 'successful'){
                         sessionStorage.setItem('id',this.id)
                         this.beforelogin()
+                        this.getpush()
+                        this.getreceiving()
+                        this.getfinished()
                         this.open2()
                         router.replace('/phone/new-order')
                     }
