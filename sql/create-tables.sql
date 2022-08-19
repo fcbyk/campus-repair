@@ -18,13 +18,25 @@ create table register(
 -- 创建故障单信息表
 create table repair_order(
 	rnumber varchar(20) primary key,
-    rsort varchar(20) not null,
+    rsort varchar(10) check(rsort in('后勤报修','水表、一卡通','空调维修',
+    '室内热水','楼道饮水机维修','消防','未选择')),
     f_equ varchar(20) not null,
     init_id varchar(20) not null,
     place varchar(50) not null,
-    rtime datetime not null,
+    rtime datetime,
     rid varchar(20),
-    note varchar(100)
+    note varchar(100),
+    order_state varchar(10) 
+    check(order_state in('派送中','以接单','已完成'))
+    default '派送中'
+);
+
+-- 创建维修人员类别表
+create table category(
+    rid varchar(20) primary key,
+    category varchar(10) 
+    check(category in('后勤报修','水表、一卡通','空调维修',
+    '室内热水','楼道饮水机维修','消防','未选择')) default '未选择'
 );
 
 -- 删除表,和查看表的创建信息
