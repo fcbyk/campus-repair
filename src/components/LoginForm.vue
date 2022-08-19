@@ -76,6 +76,17 @@ export default {
                 sessionStorage.setItem('sort',response.data[0].user_sort)
                 sessionStorage.setItem('addr',response.data[0].user_addr)
             }) 
+            if(this.id[0]=='r'){
+                axios({
+                    method: 'POST',
+                    url:'/category',
+                    params: {
+                        id: this.id,
+                    },
+                }).then(response => {
+                    sessionStorage.setItem('category',response.data[0].category)
+                }) 
+            }
         },
     }
 }

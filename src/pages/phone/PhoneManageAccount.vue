@@ -10,7 +10,8 @@
         <div>
           <p class="name">{{user.name}}</p>
           <el-tag class="tag">{{tag1}}</el-tag>
-          <el-tag type="success" class="tag">新用户</el-tag>
+          <el-tag type="success" class="tag" v-if="isnew">新用户</el-tag>
+          <el-tag type="info" class="tag" v-if="isdispaly">{{user.category}}</el-tag>
         </div>
     </div>
     <div class="card">
@@ -35,7 +36,18 @@
             <el-select v-model="user.sort" placeholder="请选择类别" disabled>
               <el-option label="学生" value="student"></el-option>
               <el-option label="教职工" value="staff"></el-option>
-              <el-option label="维修师傅" value="beijing"></el-option>
+              <el-option label="维修师傅" value="repairMan"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="维修类别" v-if="isdispaly">
+            <el-select v-model="user.category" placeholder="请选择类别">
+            <el-option value="后勤报修"></el-option>
+            <el-option value="水表、一卡通"></el-option>
+            <el-option value="室内热水"></el-option>
+            <el-option value="空调维修"></el-option>
+            <el-option value="楼道饮水机维修"></el-option>
+            <el-option value="消防"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="性别">
@@ -63,6 +75,7 @@
         <p>id：{{id}}</p>
         <p>姓名：{{user.name}}</p>
         <p>人员类别：{{tag1}}</p>
+        <p v-if="isdispaly">维修类别：{{user.category}}</p>
         <p>性别：{{user.gender}}</p>
         <p>联系电话：{{user.phone}}</p>
         <p>常用地址：{{user.addr}}</p>
@@ -112,12 +125,15 @@ export default {
           gender:  sessionStorage.getItem('gender'),
           phone:  sessionStorage.getItem('phone'),
           addr: sessionStorage.getItem('addr'),
-          sort:  sessionStorage.getItem('sort')
+          sort:  sessionStorage.getItem('sort'),
+          category: sessionStorage.getItem('category'),
         },
         state:true,
         dialogVisible:false,
         dialogVisible2:false,
-        tag1:''
+        tag1:'',
+        isdispaly:false,
+        isnew:false
       }
     },
     mounted(){
@@ -127,6 +143,12 @@ export default {
         this.tag1='教职工'
       }else{
         this.tag1='维修师傅'
+      }
+      if(this.id[0]=='r'){
+        this.isdispaly=true
+      }
+      if(this.user.name=='新用户'){
+        this.isnew=true
       }
     },
     methods:{
@@ -144,6 +166,17 @@ export default {
                 sessionStorage.setItem('sort',response.data[0].user_sort)
                 sessionStorage.setItem('addr',response.data[0].user_addr)
             }) 
+            if(this.id[0]=='r'){
+                axios({
+                    method: 'POST',
+                    url:'/category',
+                    params: {
+                        id: this.id,
+                    },
+                }).then(response => {
+                    sessionStorage.setItem('category',response.data[0].category)
+                }) 
+            }
       },
       alter(){
         this.$message({
@@ -161,7 +194,8 @@ export default {
                   name:this.user.name,
                   gender:this.user.gender,
                   phone:this.user.phone,
-                  addr:this.user.addr
+                  addr:this.user.addr,
+                  category:this.user.category
               },
           }).then(response => {
               if(response.data == 'successful'){
@@ -228,7 +262,7 @@ export default {
   margin: 5px;
 }
 .card{
-  height: 190px;
+  /* height: 190px; */
   /* background-color: aqua; */
   margin:0px 10px;
   border-radius: 5px;
