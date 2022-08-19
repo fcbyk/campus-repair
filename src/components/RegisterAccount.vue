@@ -7,7 +7,7 @@
       :visible.sync="dialogVisible"
       :width="cwidth"
       :before-close="cancel">
-
+      <div style="height: 30px;"></div>
       <el-form ref="form" :model="form" label-width="80px">
           <el-form-item label="我是">
             <el-select v-model="form.region" placeholder="你的身份">

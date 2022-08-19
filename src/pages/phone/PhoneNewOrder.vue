@@ -55,6 +55,7 @@
       title="填写故障单"
       :show-close='false'
       >
+      <div style="height: 30px;"></div>
       <el-form ref="user" :model="user" label-width="100px">
         <el-form-item label="故障单号" >
           <el-input v-model="user.number" placeholder="很抱歉，系统目前不支持自动生成"></el-input>

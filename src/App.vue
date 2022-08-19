@@ -24,4 +24,13 @@ export default {
 .message{
   width: 300px;
 }
+.el-dialog__body{
+  padding-top: 0px;
+}
+/* .el-dialog__header{
+  padding: 0;
+} */
+.el-popover{
+  min-width: 0 !important;
+}
 </style>

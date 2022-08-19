@@ -24,6 +24,7 @@
           title="修改个人信息"
           :show-close='false'
           >
+        <div style="height: 30px;"></div>
         <el-form ref="user" :model="user" label-width="70px">
           <el-form-item label="ID" >
             <el-input v-model="id" disabled></el-input>
@@ -331,7 +332,6 @@ hr{
 .dia{
   /* background-color: bisque; */
   border-radius: 10px;
-  height: 210px;
   display: flex;
   align-items: center;
   flex-direction: column;

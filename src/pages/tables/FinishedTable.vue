@@ -30,11 +30,8 @@
                 >详细</el-button>
                 <el-button
                 size="mini"
-                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                <el-button
-                size="mini"
-                type="danger"
-                @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                @click="star"
+                >评价</el-button>
                 <div slot="reference" class="name-wrapper">
                     <span>{{ scope.row.f_equ }}</span>
                 </div>
@@ -43,6 +40,30 @@
             </el-table-column>
         </el-table>
         <div class="refresh"><el-button size="medium" @click="refresh">刷新</el-button></div>
+      
+      <el-dialog
+      :visible.sync="dialogVisible"
+      width="70%"
+      :show-close='false'
+      custom-class='menudialog'
+      top='20vh'
+      >
+      <div>
+        <p>故障单号： {{showData.rnumber}}</p>
+        <p>维修类别： {{showData.rsort}}</p>
+        <p>故障设备： {{showData.f_equ}}</p>
+        <p>故障单发起人： {{showData.init_id}}</p>
+        <p>维修地点： {{showData.place}}</p>
+        <p>预约维修时间：{{showData.rtime}}</p>
+        <p>负责师傅： {{showData.rid}}</p>
+        <p>维修备注：{{showData.note}}</p>
+        <p>故障单状态：
+          <el-tag size="mini" effect="dark" type='info'>
+            {{showData.order_state}}</el-tag>
+        </p>
+      </div>
+    </el-dialog>
+    
     </div>
 </template>
 
@@ -54,15 +75,24 @@ export default {
     name:'FinishedTable',
     data() {
         return {
-            tableData: []
+            tableData: [],
+            dialogVisible: false,
+            showData:[]
         }
     },
     mounted(){
       this.tableData = JSON.parse(sessionStorage.getItem('finished'))
     },
     methods: {
+      star(){
+        this.$message.info({
+          message:'评价功能还没写! emo',
+          showClose:true
+        })
+      },
       handleEdit(index, row) {
-        console.log(index, row);
+        this.dialogVisible = true
+        this.showData = row
       },
       handleDelete(index, row) {
         console.log(index, row);
@@ -118,5 +148,8 @@ export default {
 }
 .finishedtables{
     padding: 5px 15px;
+}
+p{
+  margin-top: 5px;
 }
 </style>
