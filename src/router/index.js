@@ -7,6 +7,10 @@ import PhoneManageAccount from '../pages/phone/PhoneManageAccount'
 import PhoneOrderManagement from '../pages/phone/PhoneOrderManagement'
 import PhoneSearch from '../pages/phone/PhoneSearch'
 
+import PushTables from '../pages/tables/PushTables'
+import ReceivingTable from '../pages/tables/ReceivingTable'
+import FinishedTable from '../pages/tables/FinishedTable'
+
 export default new VueRouter({
     routes:[
         {
@@ -25,7 +29,24 @@ export default new VueRouter({
                 },
                 {
                     path:'order-management',
-                    component:PhoneOrderManagement
+                    component:PhoneOrderManagement,
+                    children:[
+                        {
+                            name:'push',
+                            path:'push',
+                            component:PushTables
+                        },
+                        {
+                            name:'receiving',
+                            path:'receiving',
+                            component:ReceivingTable
+                        },
+                        {
+                            name:'finished',
+                            path:'finished',
+                            component:FinishedTable
+                        }                        
+                    ]
                 },
                 {
                     path:'search',
