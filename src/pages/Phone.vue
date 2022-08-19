@@ -9,22 +9,16 @@
         <router-view></router-view>
     </div>
     <div class="nav">
-        <input type="radio" name="tab" id="home" checked  @click="tonew('/phone/new-order')">
+        <input type="radio" name="tab" id="home" checked>
         <input type="radio" name="tab" id="comment">
-        <input type="radio" name="tab" id="envelope">
         <input type="radio" name="tab" id="heart">
-        <input type="radio" name="tab" id="user">
-        <label for="home" class="home">
+        <label for="home" class="home" @click="tonew('/phone/new-order')">
           <div class="icc"><i class="el-icon-edit"></i></div>
           <p>故障上报</p>
         </label>
         <label for="comment" class="comment" @click="tonew('/phone/order-management')">
           <div class="icc"><i class="el-icon-document"></i></div>
           <p slot="title">故障单</p>
-        </label>
-        <label for="envelope" class="envelope" @click="tonew('/phone/search')">
-          <div class="icc"><i class="el-icon-search"></i></div>
-          <p>信息查询</p>
         </label>
         <label for="heart" class="heart" @click="tonew('/phone/manage-account')">
           <div class="icc"><i class="el-icon-user"></i></div>
@@ -95,7 +89,7 @@ export default {
 }
 .nav{
     height: 10vh;
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
     border-radius: 10px;
     margin: 10px;
     margin-top: 0px;
@@ -133,7 +127,7 @@ export default {
 .nav .tab{
     position: absolute;
     height: 100%;
-    width: 25%;
+    width: 33.333333333%;
     left: 0px;
     bottom: 0px;
     /* 渐变背景 自左向右 */
@@ -145,30 +139,20 @@ export default {
 }
 .nav #home:checked ~ label.home p,
 .nav #comment:checked ~ label.comment p,
-.nav #envelope:checked ~ label.envelope p,
 .nav #heart:checked ~ label.heart p,
-.nav #user:checked ~ label.user p,
 .nav #home:checked ~ label.home .icc,
 .nav #comment:checked ~ label.comment .icc,
-.nav #envelope:checked ~ label.envelope .icc,
-.nav #heart:checked ~ label.heart .icc,
-.nav #user:checked ~ label.user .icc{ 
+.nav #heart:checked ~ label.heart .icc{ 
     color: rgb(239, 239, 239);
     /* 这里字体颜色改变也需要加个动画过渡 */
     transition-delay: 0.2s;
     transition-duration: 0.2s;
 }
 .nav #comment:checked ~ .tab{
-    left: 25%;
-}
-.nav #envelope:checked ~ .tab{
-    left: 50%;
+    left: 33.333333333%;
 }
 .nav #heart:checked ~ .tab{
-    left: 75%;
-}
-.nav #user:checked ~ .tab{
-    left: 100%;
+    left: 66.666666666%;
 }
 .icc{
   font-size: 30px;
