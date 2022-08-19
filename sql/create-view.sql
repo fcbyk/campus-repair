@@ -21,7 +21,7 @@ where register.id = user_information.user_id;
 
 -- 创建传统报修板块所用的数据视图
 create view tradition as 
-select category,rname as name,phone 
+select rid,category,rname as name,phone 
 from repairMan_information;
 
 -- 删除视图

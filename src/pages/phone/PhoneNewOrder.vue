@@ -28,7 +28,24 @@
       top='15vh'
       >
       <div class="diaa">
-        <p>本系统所有维修师傅的电话</p>
+        <p class="phonetitle">后勤报修</p>
+        <p v-for="p in ax" :key="p.rid">
+          {{p.name}}: {{p.phone}}</p>
+        <p class="phonetitle">水表、一卡通</p>
+        <p v-for="p in bx" :key="p.rid">
+          {{p.name}}: {{p.phone}}</p>
+        <p class="phonetitle">室内热水</p>
+        <p v-for="p in cx" :key="p.rid">
+          {{p.name}}: {{p.phone}}</p>
+        <p class="phonetitle">空调维修</p>
+        <p v-for="p in dx" :key="p.rid">
+          {{p.name}}: {{p.phone}}</p>
+        <p class="phonetitle">楼道饮水机维修</p>
+        <p v-for="p in ex" :key="p.rid">
+          {{p.name}}: {{p.phone}}</p>
+        <p class="phonetitle">消防</p>
+        <p v-for="p in fx" :key="p.rid">
+          {{p.name}}: {{p.phone}}</p>
       </div>
     </el-dialog>
 
@@ -39,21 +56,24 @@
       :show-close='false'
       >
       <el-form ref="user" :model="user" label-width="100px">
+        <el-form-item label="故障单号" >
+          <el-input v-model="user.number" placeholder="很抱歉，系统目前不支持自动生成"></el-input>
+        </el-form-item>
         <el-form-item label="维修类别">
           <el-select v-model="user.sort" placeholder="请选择类别">
-            <el-option label="后勤报修" value="1"></el-option>
-            <el-option label="水表、一卡通" value="2"></el-option>
-            <el-option label="室内热水" value="3"></el-option>
-            <el-option label="空调维修" value="4"></el-option>
-            <el-option label="楼道饮水机维修" value="5"></el-option>
-            <el-option label="消防" value="6"></el-option>
+            <el-option value="后勤报修"></el-option>
+            <el-option value="水表、一卡通"></el-option>
+            <el-option value="室内热水"></el-option>
+            <el-option value="空调维修"></el-option>
+            <el-option value="楼道饮水机维修"></el-option>
+            <el-option value="消防"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="故障设备名称" >
-          <el-input v-model="id" ></el-input>
+          <el-input v-model="user.equ" ></el-input>
         </el-form-item>
         <el-form-item label="地点">
-          <el-input v-model="user.name"></el-input>
+          <el-input v-model="user.addr"></el-input>
         </el-form-item>
         <el-form-item label="预约时间" size="mini">
           <el-col :span="11">
@@ -65,7 +85,7 @@
           </el-col>
         </el-form-item>
         <el-form-item label="补充说明">
-          <el-input type="textarea" v-model="user.addr"></el-input>
+          <el-input type="textarea" v-model="user.note"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="confirm">立即上报</el-button>
@@ -78,6 +98,10 @@
 </template>
 
 <script>
+import axios from 'axios'
+axios.defaults.baseURL = 'http://192.168.31.215:5000/'
+// axios.defaults.baseURL = 'http://fcbyk.com:5000/'
+let emptyStr = ''
 export default {
     name:'PhoneNewOrder',
     data() {
@@ -85,15 +109,74 @@ export default {
         dialogVisible:false,
         dialogVisible2:false,
         user:{
-          name: '',
-          gender:  '',
-          phone:  '',
+          number: '',
+          sort: '',
+          equ:  '',
           addr: '',
-          sort:  ''
+          note: '',
         },
       }
-      
     },
+    mounted(){
+          axios.get('/tradition-1').then(res=>{
+          this.ax = res.data})
+          axios.get('/tradition-2').then(res=>{
+          this.bx = res.data})
+          axios.get('/tradition-3').then(res=>{
+          this.cx = res.data})
+          axios.get('/tradition-4').then(res=>{
+          this.dx = res.data})
+          axios.get('/tradition-5').then(res=>{
+          this.ex = res.data})
+          axios.get('/tradition-6').then(res=>{
+          this.fx = res.data})
+    },
+    methods:{
+      confirm(){
+        if(this.user.number== emptyStr){
+          this.$message.error("故障单号不能为空")
+          return 0
+        }
+        if(this.user.sort== emptyStr){
+          this.$message.error("请选择维修类别")
+          return 0
+        }
+        if(this.user.equ== emptyStr){
+          this.$message.error("请填写故障设备名称")
+          return 0
+        }
+        if(this.user.addr== emptyStr){
+          this.$message.error("请填写维修地点")
+          return 0
+        }
+        axios({
+            method: 'POST',
+            url:'/neworder',
+            params: {
+              number: this.user.number,
+              sort: this.user.sort,
+              equ:  this.user.equ,
+              addr: this.user.addr,
+              note: this.user.note,
+              uid: sessionStorage.getItem('id')
+            },
+        }).then(response => {
+            if(response.data=='successful'){
+                this.dialogVisible2 = false
+                this.$message.success("故障单已成功生成")
+                this.user.number = emptyStr
+                this.user.sort = emptyStr
+                this.user.equ = emptyStr
+                this.user.addr = emptyStr
+                this.user.note = emptyStr
+            }
+            if(response.data=='err'){
+                this.$message.error('故障单以存在，添加失败')
+            }},()=>{
+                this.$message.error('数据库连接失败')
+        })
+      }
+    }
 }
 </script>
 
@@ -163,5 +246,10 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
+  font-size: 15px;
+}
+.phonetitle{
+  margin: 20px 0px 3px 0px;
+  font-weight: 700;
 }
 </style>

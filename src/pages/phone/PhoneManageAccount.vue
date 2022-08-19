@@ -5,7 +5,6 @@
           <span @click="alter">
             <el-avatar :src="circleUrl" :size="150" ></el-avatar>
           </span>
-          
         </div>
         <div>
           <p class="name">{{user.name}}</p>
