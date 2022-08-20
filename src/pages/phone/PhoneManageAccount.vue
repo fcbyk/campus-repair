@@ -119,7 +119,7 @@ export default {
     data() {
       return {
         id:sessionStorage.getItem('id'),
-        circleUrl: `https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fspider.nosdn.127.net%2F399b6ac1db4ba51e476d94fc859df37f.jpeg&refer=http%3A%2F%2Fspider.nosdn.127.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1663262874&t=db0b7e9fec0ed51ef60040cb7a47559e`,
+        circleUrl: `http://fcbyk.com/images/pig.jpeg`,
         user:{
           name: sessionStorage.getItem('name'),
           gender:  sessionStorage.getItem('gender'),
