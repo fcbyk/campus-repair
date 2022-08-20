@@ -56,9 +56,7 @@ export default {
             },()=>{})
         },
         login(){
-            let aa = this.id
-            let bb = this.pw
-            if(aa == emptyStr){
+            if(this.id == emptyStr){
                 this.$message.error({
                     message:'请输入账号',
                     showClose: true,
@@ -66,7 +64,7 @@ export default {
                 })
                 return 0
             }
-            if(bb == emptyStr){
+            if(this.pw == emptyStr){
                 this.$message.error({
                     message:'请输入密码',
                     showClose: true,
@@ -78,9 +76,10 @@ export default {
                 method: 'POST',
                 url:'/login',
                 params: {
-                    id: aa,
-                    pw: bb,
+                    id: this.id,
+                    pw: this.pw,
                 },}).then(response => {
+
                     if(response.data == 'successful'){
                         sessionStorage.setItem('id',this.id)
                         this.beforelogin()
@@ -98,6 +97,7 @@ export default {
                             router.replace('/phone/new-order')
                         }   
                     }
+
                     if(response.data == 'err'){
                         this.$message.error({
                             message:'密码错误',
@@ -105,6 +105,7 @@ export default {
                             duration:1000,
                         })
                     }
+
                     if(response.data == 'empty'){
                         this.$message.error({
                             message:'不存在该账号',
@@ -112,6 +113,7 @@ export default {
                             duration:1000,
                         })
                     }
+
                 },()=>{
                     this.$message.error({
                         message:'数据库连接失败',

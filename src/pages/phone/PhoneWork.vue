@@ -73,26 +73,37 @@ export default {
       }
     },
     mounted(){
-      
-        axios({
-              method: 'POST',
-              url:'/getsquare',
-              params: {
-                  category: sessionStorage.getItem('category'),
-              },
-          }).then(response => {
-            sessionStorage.setItem('square',JSON.stringify(response.data))
-          },()=>{})
+        window.setTimeout(()=>{
+          axios({
+                method: 'POST',
+                url:'/getsquare',
+                params: {
+                    category: sessionStorage.getItem('category'),
+                },
+            }).then(response => {
+              sessionStorage.setItem('square',JSON.stringify(response.data))
+            },()=>{})
 
-        axios({
-              method: 'POST',
-              url:'/gettodolist',
-              params: {
-                  rid: sessionStorage.getItem('id'),
-              },
-          }).then(response => {
-            sessionStorage.setItem('todolist',JSON.stringify(response.data))
-          },()=>{})
+          axios({
+                method: 'POST',
+                url:'/gettodolist',
+                params: {
+                    rid: sessionStorage.getItem('id'),
+                },
+            }).then(response => {
+              sessionStorage.setItem('todolist',JSON.stringify(response.data))
+            },()=>{})
+
+          axios({
+                method: 'POST',
+                url:'/getcompleted',
+                params: {
+                    rid: sessionStorage.getItem('id'),
+                },
+            }).then(response => {
+              sessionStorage.setItem('completed',JSON.stringify(response.data))
+            },()=>{})
+        },200)
     },
     methods:{
       getsquare(){
