@@ -141,6 +141,17 @@ export default {
           this.fx = res.data})
     },
     methods:{
+      getpush(){
+          axios({
+              method: 'POST',
+              url:'/getpush',
+              params: {
+                  id: sessionStorage.getItem('id'),
+              },
+          }).then(response => {
+              sessionStorage.setItem('push',JSON.stringify(response.data))
+          },()=>{})
+      },
       confirm(){
         if(this.user.number== emptyStr){
           this.$message.error("故障单号不能为空")
@@ -173,6 +184,7 @@ export default {
             if(response.data=='successful'){
                 this.dialogVisible2 = false
                 this.$message.success("故障单已成功生成")
+                this.getpush()
                 this.user.number = emptyStr
                 this.user.sort = emptyStr
                 this.user.equ = emptyStr

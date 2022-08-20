@@ -12,17 +12,17 @@
         <input type="radio" name="tab" id="home" checked>
         <input type="radio" name="tab" id="comment">
         <input type="radio" name="tab" id="heart">
-        <label for="home" class="home" @click="tonew('/phone/new-order')">
-          <div class="icc"><i class="el-icon-edit"></i></div>
-          <p>故障上报</p>
+        <label for="home" class="home" @click="tonew('neworder')">
+          <div class="icc"><i :class="nav1icon"></i></div>
+          <p>{{nav1}}</p>
         </label>
-        <label for="comment" class="comment" @click="tonew('/phone/order-management')">
-          <div class="icc"><i class="el-icon-document"></i></div>
-          <p slot="title">故障单</p>
+        <label for="comment" class="comment" @click="tonew('ordermanagement')">
+          <div class="icc"><i :class="nav2icon"></i></div>
+          <p slot="title">{{nav2}}</p>
         </label>
-        <label for="heart" class="heart" @click="tonew('/phone/manage-account')">
-          <div class="icc"><i class="el-icon-user"></i></div>
-          <p>账号管理</p>
+        <label for="heart" class="heart" @click="tonew('manageaccount')">
+          <div class="icc"><i :class="nav3icon"></i></div>
+          <p>{{nav3}}</p>
         </label>
         <div class="tab"></div>
     </div>
@@ -36,13 +36,35 @@ export default {
     data() {
       return {
         to:'',
+        nav1:'故障上报',
+        nav2:'故障单',
+        nav3:'账号管理',
+        nav1icon:'el-icon-edit',
+        nav2icon:'el-icon-document',
+        nav3icon:'el-icon-user',
+        // thisurl:location.href
       }
+    },
+    mounted() {
+      if (sessionStorage.getItem('id')[0]=='r') {
+        this.nav1 = '工作'
+        this.nav2 = '已完成'
+        this.nav3 = '账号'
+        this.nav1icon = 'el-icon-s-cooperation'
+        this.nav2icon = 'el-icon-s-claim'
+        this.nav3icon = 'el-icon-s-custom'
+      }
+      // console.log(this.thisurl)
     },
     methods:{
       tonew(x){
         if(x==this.to) return 0
         this.to=x
-        router.replace(x)
+        if(x=='neworder' && sessionStorage.getItem('id')[0]=='r'){
+          router.replace({name:'work'})
+          return 0
+        }
+        router.replace({name:x})
       }
     }
 }

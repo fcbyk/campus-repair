@@ -86,7 +86,11 @@ export default {
                         this.getreceiving()
                         this.getfinished()
                         this.open2()
-                        router.replace('/phone/new-order')
+                        if(this.id[0]=='r'){
+                            router.replace({name:'work'})
+                        }else{
+                            router.replace('/phone/new-order')
+                        }   
                     }
                     if(response.data == 'err'){
                         this.$message.error('密码错误')
