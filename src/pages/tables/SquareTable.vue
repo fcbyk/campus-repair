@@ -107,13 +107,17 @@ export default {
                 sessionStorage.setItem('square',JSON.stringify(response.data))
                 this.tableData = JSON.parse(sessionStorage.getItem('square'))
                 },()=>{})
-
-            this.$message.success({
-              showClose:true,
-              message:'成功接单'
-            })
+                this.$message.success({
+                  showClose:true,
+                  message:'成功接单',
+                  duration:1500
+                })
           },()=>{
-            this.$message.error('数据库连接失败')
+            this.$message.error({
+              message:'数据库连接失败',
+              duration:1500,
+              showClose:true,    
+            })
           })
       },
       refresh(){
@@ -128,10 +132,15 @@ export default {
             this.tableData = JSON.parse(sessionStorage.getItem('square'))
             this.$message.success({
               showClose:true,
-              message:'刷新成功'
+              message:'刷新成功',
+              duration:1000
             })
           },()=>{
-            this.$message.error('数据库连接失败')
+            this.$message.error({
+              message:'数据库连接失败',
+              duration:1500,
+              showClose:true,    
+            })
           })
       },
     }

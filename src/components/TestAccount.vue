@@ -5,7 +5,6 @@
       title="已注册账号"
       :visible.sync="drawer"
       direction="ltr"
-      :before-close="handleClose"
       :size="cwidth">
       <div v-for="p in ax" :key="p.id" class="list">
         <p>名字: {{p.name}}</p>
@@ -33,14 +32,14 @@ export default {
         }
     },
     methods:{
-        handleClose(done) {
-        this.$confirm('确认关闭？','',{
-                customClass:'message'
-            })
-            .then( () => {
-                done();
-            }).catch( () => {});
-        },
+        // handleClose(done) {
+        // this.$confirm('确认关闭？','',{
+        //         customClass:'message'
+        //     })
+        //     .then( () => {
+        //         done();
+        //     }).catch( () => {});
+        // },
         pwDrawer(){
             axios.get('/test').then(res=>{
                 this.ax = res.data

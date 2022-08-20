@@ -90,7 +90,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="confirm">立即上报</el-button>
-          <el-button @click="dialogVisible2 = false">取消</el-button>
+          <el-button @click="handleClose">取消</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -141,6 +141,20 @@ export default {
           this.fx = res.data})
     },
     methods:{
+      handleClose() {
+        this.$confirm('确认关闭？',{
+          customClass:'message'
+        })
+          .then(() => {
+            this.dialogVisible2 = false
+            this.user.number = emptyStr
+            this.user.sort = emptyStr
+            this.user.equ = emptyStr
+            this.user.addr = emptyStr
+            this.user.note = emptyStr
+          })
+          .catch(() => {});
+      },
       getpush(){
           axios({
               method: 'POST',
@@ -154,19 +168,35 @@ export default {
       },
       confirm(){
         if(this.user.number== emptyStr){
-          this.$message.error("故障单号不能为空")
+          this.$message.error({
+            message:"故障单号不能为空",
+            duration:1500,
+            showClose: true,
+          })
           return 0
         }
         if(this.user.sort== emptyStr){
-          this.$message.error("请选择维修类别")
+          this.$message.error({
+            message:"请选择维修类别",
+            duration:1500,
+            showClose: true,
+          })
           return 0
         }
         if(this.user.equ== emptyStr){
-          this.$message.error("请填写故障设备名称")
+          this.$message.error({
+            message:"请填写故障设备名称",
+            duration:1500,
+            showClose: true,
+          })
           return 0
         }
         if(this.user.addr== emptyStr){
-          this.$message.error("请填写维修地点")
+          this.$message.error({
+            message:"请填写维修地点",
+            duration:1500,
+            showClose: true,
+          })
           return 0
         }
         axios({
@@ -183,7 +213,11 @@ export default {
         }).then(response => {
             if(response.data=='successful'){
                 this.dialogVisible2 = false
-                this.$message.success("故障单已成功生成")
+                this.$message.success({
+                  message:"故障单已成功生成",
+                  duration:1500,
+                  showClose: true,
+                })
                 this.getpush()
                 this.user.number = emptyStr
                 this.user.sort = emptyStr
@@ -192,9 +226,17 @@ export default {
                 this.user.note = emptyStr
             }
             if(response.data=='err'){
-                this.$message.error('故障单以存在，添加失败')
+                this.$message.error({
+                  message:"故障单以存在，添加失败",
+                  duration:1500,
+                  showClose: true,
+                })
             }},()=>{
-                this.$message.error('数据库连接失败')
+                this.$message.error({
+                  message:"数据库连接失败",
+                  duration:1500,
+                  showClose: true,
+                })
         })
       }
     }

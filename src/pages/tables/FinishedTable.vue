@@ -87,28 +87,15 @@ export default {
       star(){
         this.$message.info({
           message:'评价功能还没写! emo',
-          showClose:true
+          showClose:true,
+          duration:1500
         })
       },
       handleEdit(index, row) {
         this.dialogVisible = true
         this.showData = row
       },
-      handleDelete(index, row) {
-        console.log(index, row);
-        this.$confirm("确定删除吗",{ 
-          customClass:'message'
-        }).then(()=>{
-          this.deletethis(row.rnumber)
-          this.tableData.splice(index,1)
-          sessionStorage.setItem('finished',JSON.stringify(this.tableData))
-        },()=>{})
-      },
       refresh(){
-        this.$message.success({
-          showClose:true,
-          message:'刷新成功'
-        })
         axios({
               method: 'POST',
               url:'/getfinished',
@@ -118,25 +105,19 @@ export default {
           }).then(response => {
             sessionStorage.setItem('finished',JSON.stringify(response.data))
             this.tableData = JSON.parse(sessionStorage.getItem('finished'))
+            this.$message.success({
+              message:'刷新成功',
+              duration:1000,
+              showClose:true,
+            })
           },()=>{
-            this.$message.error('数据库连接失败')
+            this.$message.error({
+              message:'数据库连接失败',
+              duration:1500,
+              showClose:true,    
+            })
           })
-      },
-      deletethis(x){
-        axios({
-              method: 'POST',
-              url:'/deletethis',
-              params: {
-                  number: x,
-              },
-          }).then(response => {
-            if(response.data == 'successful'){
-              this.$message.success('删除成功')
-            }
-          },()=>{
-            this.$message.error('数据库连接失败')
-          })
-      },
+      }
     }
 }
 </script>

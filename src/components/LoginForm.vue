@@ -55,21 +55,23 @@ export default {
                 sessionStorage.setItem('finished',JSON.stringify(response.data))
             },()=>{})
         },
-        open2() {
-            this.$message({
-                message: '登录成功',
-                type: 'success'
-            })
-        },
         login(){
             let aa = this.id
             let bb = this.pw
             if(aa == emptyStr){
-                this.$message.error('请输入账号')
+                this.$message.error({
+                    message:'请输入账号',
+                    showClose: true,
+                    duration:1000,
+                })
                 return 0
             }
             if(bb == emptyStr){
-                this.$message.error('请输入密码')
+                this.$message.error({
+                    message:'请输入密码',
+                    showClose: true,
+                    duration:1000,
+                })
                 return 0
             }
             axios({
@@ -85,7 +87,11 @@ export default {
                         this.getpush()
                         this.getreceiving()
                         this.getfinished()
-                        this.open2()
+                        this.$message.success({
+                            message: '登录成功',
+                            showClose: true,
+                            duration:1000,
+                        })
                         if(this.id[0]=='r'){
                             router.replace({name:'work'})
                         }else{
@@ -93,13 +99,25 @@ export default {
                         }   
                     }
                     if(response.data == 'err'){
-                        this.$message.error('密码错误')
+                        this.$message.error({
+                            message:'密码错误',
+                            showClose: true,
+                            duration:1000,
+                        })
                     }
                     if(response.data == 'empty'){
-                        this.$message.error('不存在该账号')
+                        this.$message.error({
+                            message:'不存在该账号',
+                            showClose: true,
+                            duration:1000,
+                        })
                     }
                 },()=>{
-                    this.$message.error('数据库连接失败')
+                    this.$message.error({
+                        message:'数据库连接失败',
+                        showClose: true,
+                        duration:1000,
+                    })
             })
         },
         beforelogin() {

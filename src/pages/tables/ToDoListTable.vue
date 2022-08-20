@@ -107,12 +107,17 @@ export default {
                 this.tableData = JSON.parse(sessionStorage.getItem('todolist'))
                 },()=>{})
 
-            this.$message.success({
-              showClose:true,
-              message:'故障维修完成，非常nice！'
-            })
+                this.$message.success({
+                  showClose:true,
+                  message:'故障维修完成，非常nice！',
+                  duration:1500
+                })
           },()=>{
-            this.$message.error('数据库连接失败')
+            this.$message.error({
+              message:'数据库连接失败',
+              duration:1500,
+              showClose:true,    
+            })
           })
       },
       refresh(){
@@ -127,10 +132,15 @@ export default {
             this.tableData = JSON.parse(sessionStorage.getItem('todolist'))
             this.$message.success({
               showClose:true,
-              message:'刷新成功'
+              message:'刷新成功',
+              duration:1000
             })
           },()=>{
-            this.$message.error('数据库连接失败')
+            this.$message.error({
+              message:'数据库连接失败',
+              duration:1500,
+              showClose:true,    
+            })
           })
       },
     }

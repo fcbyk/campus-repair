@@ -85,10 +85,6 @@ export default {
         this.showData = row
       },
       refresh(){
-        this.$message.success({
-          showClose:true,
-          message:'刷新成功'
-        })
         axios({
               method: 'POST',
               url:'/getreceiving',
@@ -98,8 +94,17 @@ export default {
           }).then(response => {
             sessionStorage.setItem('receiving',JSON.stringify(response.data))
             this.tableData = JSON.parse(sessionStorage.getItem('receiving'))
+            this.$message.success({
+              showClose:true,
+              message:'刷新成功',
+              duration:1000
+            })
           },()=>{
-            this.$message.error('数据库连接失败')
+            this.$message.error({
+              message:'数据库连接失败',
+              duration:1500,
+              showClose:true,    
+            })
           })
       }
     }

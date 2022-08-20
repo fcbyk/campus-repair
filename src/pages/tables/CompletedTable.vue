@@ -95,11 +95,16 @@ export default {
             sessionStorage.setItem('completed',JSON.stringify(response.data))
             this.tableData = JSON.parse(sessionStorage.getItem('completed'))
             this.$message.success({
+              message:'刷新成功',
+              duration:1000,
               showClose:true,
-              message:'刷新成功'
             })
           },()=>{
-            this.$message.error('数据库连接失败')
+            this.$message.error({
+              message:'数据库连接失败',
+              duration:1500,
+              showClose:true,    
+            })
           })
       },
     }

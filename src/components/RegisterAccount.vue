@@ -67,70 +67,98 @@ export default {
             this.form.zpw2 = emptyStr
             }).catch( ()=> {});
         },
-        open1() {
-            this.$notify({
-                title: '注册成功',
-                message: '请记住你的账号密码',
-                type: 'success'
-            });
-        },
-        open4(x) {
-            this.$notify.error({
-                title: '注册失败',
-                message: x
-            });
-        },
         onSubmit() { 
             if(this.form.region == emptyStr){
-                this.$message.error('请选择你的身份')
+                this.$message.error({
+                    message:'请选择你的身份',
+                    duration:2000,
+                    showClose: true,
+                })
                 return 0
             }
             if(this.form.name == emptyStr){
-                this.$message.error('账号不能为空')
+                this.$message.error({
+                    message:'账号不能为空',
+                    duration:2000,
+                    showClose: true,
+                })
                 return 0
             }
             if(this.form.zpw1 == emptyStr){
-                this.$message.error('密码不能为空')
+                this.$message.error({
+                    message:'密码不能为空',
+                    duration:2000,
+                    showClose: true,
+                })
                 return 0
             }
             if(this.form.zpw1 != this.form.zpw2){
-                this.$message.error('两次输入的密码不一致')
+                this.$message.error({
+                    message:'两次输入的密码不一致',
+                    duration:2000,
+                    showClose: true,
+                })
                 return 0
             }
             if(this.form.region=='student' && this.form.name[0]!='s'){
-                this.$message.error('学生账号必须以s开头')
+                this.$message.error({
+                    message:'学生账号必须以s开头',
+                    duration:2000,
+                    showClose: true,
+                })
                 return 0
             }
             if(this.form.region=='staff' && this.form.name[0]!='t'){
-                this.$message.error('教职工账号必须以t开头')
+                this.$message.error({
+                    message:'教职工账号必须以t开头',
+                    duration:2000,
+                    showClose: true,
+                })
                 return 0
             }
             if(this.form.region=='repairMan' && this.form.name[0]!='r'){
-                this.$message.error('维修师傅账号必须以r开头')
+                this.$message.error({
+                    message:'维修师傅账号必须以r开头',
+                    duration:1000,
+                    showClose: true,
+                })
                 return 0
             }
-
-            console.log('submit!');
-            let aa=this.form.name
-            let bb=this.form.zpw2
-            let cc=this.form.region
 
             axios({
                 method: 'POST',
                 url:'/register',
                 params: {
-                    id: aa,
-                    pw: bb,
-                    sort: cc
+                    id: this.form.name,
+                    pw: this.form.zpw2,
+                    sort: this.form.region
                 },
             }).then(response => {
                 if(response.data=='successful'){
-                    this.open1()
+                    this.$notify({
+                        title: '注册成功',
+                        message: '请记住你的账号密码',
+                        type: 'success',
+                        duration:2000
+                    });
+                    this.dialogVisible = false
+                    this.form.name = emptyStr
+                    this.form.region = emptyStr
+                    this.form.zpw1 = emptyStr
+                    this.form.zpw2 = emptyStr
                 }
                 if(response.data=='err'){
-                    this.open4('已存在该账号')
+                    this.$notify.error({
+                        title: '注册失败',
+                        message: '已存在该账号',
+                        duration:2000
+                    });
                 }},()=>{
-                    this.open4('数据库连接失败')
+                    this.$notify.error({
+                        title: '注册失败',
+                        message: '已存在该账号',
+                        duration:2000
+                    });
             })
         },
     }

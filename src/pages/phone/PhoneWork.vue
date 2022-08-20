@@ -110,50 +110,6 @@ export default {
           this.dialogVisible = true
 
       }
-      // confirm(){
-      //   if(this.user.number== emptyStr){
-      //     this.$message.error("故障单号不能为空")
-      //     return 0
-      //   }
-      //   if(this.user.sort== emptyStr){
-      //     this.$message.error("请选择维修类别")
-      //     return 0
-      //   }
-      //   if(this.user.equ== emptyStr){
-      //     this.$message.error("请填写故障设备名称")
-      //     return 0
-      //   }
-      //   if(this.user.addr== emptyStr){
-      //     this.$message.error("请填写维修地点")
-      //     return 0
-      //   }
-      //   axios({
-      //       method: 'POST',
-      //       url:'/neworder',
-      //       params: {
-      //         number: this.user.number,
-      //         sort: this.user.sort,
-      //         equ:  this.user.equ,
-      //         addr: this.user.addr,
-      //         note: this.user.note,
-      //         uid: sessionStorage.getItem('id')
-      //       },
-      //   }).then(response => {
-      //       if(response.data=='successful'){
-      //           this.dialogVisible2 = false
-      //           this.$message.success("故障单已成功生成")
-      //           this.user.number = emptyStr
-      //           this.user.sort = emptyStr
-      //           this.user.equ = emptyStr
-      //           this.user.addr = emptyStr
-      //           this.user.note = emptyStr
-      //       }
-      //       if(response.data=='err'){
-      //           this.$message.error('故障单以存在，添加失败')
-      //       }},()=>{
-      //           this.$message.error('数据库连接失败')
-      //   })
-      // }
     }
 }
 </script>

@@ -64,7 +64,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="confirm">修改</el-button>
-            <el-button @click="dialogVisible2 = false">取消</el-button>
+            <el-button @click="handleClose">取消</el-button>
           </el-form-item>
         </el-form>
         </el-dialog>
@@ -182,7 +182,8 @@ export default {
         this.$message({
           showClose: true,
           message: '暂不支持修改头像，如需修改，联系开发者',
-          type: 'error'
+          type: 'error',
+          duration:1500,
         })
       },
       confirm(){
@@ -203,11 +204,17 @@ export default {
                   this.dialogVisible2 = false
                   this.$message({
                       message: '修改成功',
-                      type: 'success'
+                      type: 'success',
+                      duration:1500,
+                      showClose: true,
                   })
               }
           },()=>{
-            this.$message.error('数据库连接失败')
+            this.$message.error({
+                message:'数据库连接失败',
+                duration:1500,
+                showClose: true,
+            })
           })
       },
       user_info(){
@@ -233,12 +240,12 @@ export default {
                 sessionStorage.clear()
             }).catch( () => {});
       },
-      handleClose(done) {
+      handleClose() {
         this.$confirm('确认关闭？',{
           customClass:'message'
         })
           .then(() => {
-            done();
+            this.dialogVisible2 = false
           })
           .catch(() => {});
       }

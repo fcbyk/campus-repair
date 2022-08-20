@@ -164,10 +164,15 @@ export default {
             this.tableData = JSON.parse(sessionStorage.getItem('push'))
             this.$message.success({
               showClose:true,
-              message:'刷新成功'
+              message:'刷新成功',
+              duration:1000
             })
           },()=>{
-            this.$message.error('数据库连接失败')
+            this.$message.error({
+              message:'数据库连接失败',
+              duration:1500,
+              showClose:true,    
+            })
           })
       },
       deletethis(x){
@@ -179,23 +184,43 @@ export default {
               },
           }).then(response => {
             if(response.data == 'successful'){
-              this.$message.success('删除成功')
+              this.$message.success({
+                message:'删除成功',
+                duration:1500,
+                showClose:true,
+              })
             }
           },()=>{
-            this.$message.error('数据库连接失败')
+            this.$message.error({
+              message:'数据库连接失败',
+              duration:1500,
+              showClose:true,    
+            })
           })
       },
       confirm(){
         if(this.showData.rsort== emptyStr){
-          this.$message.error("请选择维修类别")
+          this.$message.error({
+            message:'请选择维修类别',
+            duration:1500,
+            showClose:true,    
+          })
           return 0
         }
         if(this.showData.f_equ== emptyStr){
-          this.$message.error("请填写故障设备名称")
+          this.$message.error({
+            message:'请填写故障设备名称',
+            duration:1500,
+            showClose:true,    
+          })
           return 0
         }
         if(this.showData.place== emptyStr){
-          this.$message.error("请填写维修地点")
+          this.$message.error({
+            message:'请填写维修地点',
+            duration:1500,
+            showClose:true,    
+          })
           return 0
         }
         axios({
@@ -223,13 +248,25 @@ export default {
                   },()=>{})
 
                 this.dialogVisible2 = false
-                this.$message.success("修改成功")
+                this.$message.success({
+                  message:'修改成功',
+                  duration:1500,
+                  showClose:true,
+                })
             }
             if(response.data=='err'){
-                this.$message.error('修改失败')
+                this.$message.error({
+                  message:'修改失败',
+                  duration:1500,
+                  showClose:true,    
+                })
             }
             },()=>{
-                this.$message.error('数据库连接失败')
+            this.$message.error({
+              message:'数据库连接失败',
+              duration:1500,
+              showClose:true,    
+            })
         })
       }
     }

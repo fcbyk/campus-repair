@@ -236,12 +236,6 @@ export default {
         vshow:false
       }
     },
-    methods: {
-      // hello(){
-      //   echarts.init(this.$refs.chartDom).clear()
-      //   echarts.init(this.$refs.chartDom).setOption(this.option);
-      // }
-    },
     mounted(){
       echarts.init(this.$refs.chartDom1).setOption(this.option);
       echarts.init(this.$refs.chartDom2).setOption(this.option2);
