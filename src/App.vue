@@ -33,4 +33,15 @@ export default {
 .el-popover{
   min-width: 0 !important;
 }
+.el-card__body{
+  padding: 0;
+}
+.el-card__header{
+  padding: 5px;
+}
+.el-card__header span{
+  font-size:13px; 
+  margin-left: 10px;
+  color: #303133;
+}
 </style>

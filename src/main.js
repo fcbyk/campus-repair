@@ -11,8 +11,10 @@ import {
   MessageBox,Button,Select,Tag,
   Avatar,Empty,FormItem,Option,Notification,Radio,
   Checkbox,Col,DatePicker,TimePicker,Tabs,TabPane,
-  Table,TableColumn,Popover} from 'element-ui'	// 按需引入
+  Table,TableColumn,Popover,Card,Alert} from 'element-ui'	// 按需引入
 
+Vue.use(Alert)
+Vue.use(Card)
 Vue.use(Popover)
 Vue.use(TableColumn)
 Vue.use(Table)
@@ -38,7 +40,6 @@ Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
 Vue.prototype.$notify = Notification
 Vue.config.productionTip = false
-
 
 // 全局路由守卫
 router.beforeEach((to,from,next) => {
