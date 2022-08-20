@@ -5,7 +5,7 @@
       <p>天气炎热，记得多喝水噢</p>
     </div>
     <div class="newbot">
-      <div class="box1" @click="dialogVisible = true">
+      <div class="box1" @click="getsquare">
         <div class="left"><i class="el-icon-circle-plus"></i></div>
         <div class="right">
           <i>接单</i>
@@ -73,6 +73,7 @@ export default {
       }
     },
     mounted(){
+      
         axios({
               method: 'POST',
               url:'/getsquare',
@@ -94,6 +95,21 @@ export default {
           },()=>{})
     },
     methods:{
+      getsquare(){
+
+        // axios({
+        //       method: 'POST',
+        //       url:'/getsquare',
+        //       params: {
+        //           category: sessionStorage.getItem('category'),
+        //       },
+        //   }).then(response => {
+        //     sessionStorage.setItem('square',JSON.stringify(response.data))
+        //   },()=>{})
+
+          this.dialogVisible = true
+
+      }
       // confirm(){
       //   if(this.user.number== emptyStr){
       //     this.$message.error("故障单号不能为空")

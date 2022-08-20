@@ -6,11 +6,13 @@ import PhoneNewOrder from '../pages/phone/PhoneNewOrder'
 import PhoneManageAccount from '../pages/phone/PhoneManageAccount'
 import PhoneOrderManagement from '../pages/phone/PhoneOrderManagement'
 import PhoneWork from '../pages/phone/PhoneWork'
-import PhoneSearch from '../pages/phone/PhoneSearch'
+import PhoneCompleted from '../pages/phone/PhoneCompleted'
+import PhoneEcharts from '../pages/phone/PhoneEcharts'
 
 import PushTables from '../pages/tables/PushTables'
 import ReceivingTable from '../pages/tables/ReceivingTable'
 import FinishedTable from '../pages/tables/FinishedTable'
+import CompletedTable from '../pages/tables/CompletedTable'
 
 
 export default new VueRouter({
@@ -53,8 +55,21 @@ export default new VueRouter({
                     ]
                 },
                 {
-                    path:'search',
-                    component:PhoneSearch
+                    name:'completed',
+                    path:'completed',
+                    component:PhoneCompleted,
+                    children:[
+                        {
+                            name:'completed_table',
+                            path:'completed-table',
+                            component:CompletedTable
+                        },
+                        {
+                            name:'echarts',
+                            path:'echarts',
+                            component:PhoneEcharts
+                        },                     
+                    ]
                 },
                 {
                     name:'manageaccount',

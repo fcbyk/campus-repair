@@ -64,6 +64,10 @@ export default {
           router.replace({name:'work'})
           return 0
         }
+        if(x=='ordermanagement' && sessionStorage.getItem('id')[0]=='r'){
+          router.replace({name:'completed'})
+          return 0
+        }
         router.replace({name:x})
       }
     }
