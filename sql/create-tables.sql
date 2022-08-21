@@ -28,7 +28,9 @@ create table repair_order(
     note varchar(100),
     order_state varchar(10) 
     check(order_state in('推送中','已接单','已完成'))
-    default '推送中'
+    default '推送中',
+    foreign key(init_id) references user_information(user_id),
+    foreign key(rid) references user_information(user_id)
 );
 
 -- 创建维修人员类别表

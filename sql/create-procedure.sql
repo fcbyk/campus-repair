@@ -23,7 +23,7 @@ in uid varchar(20),in pla varchar(50),
 in onote varchar(100))
 BEGIN
 insert into repair_order(rnumber,rsort,f_equ,
-init_id,place,note) values(oid,sort,equ,uid,pla,onote);
+init_id,place,note,rtime) values(oid,sort,equ,uid,pla,onote,now());
 END //
 DELIMITER ;
 
@@ -34,7 +34,7 @@ in equ varchar(20),in pla varchar(50),
 in onote varchar(100),in oid varchar(20))
 BEGIN
 update repair_order set rsort=sort,f_equ=equ,
-place=pla,note=onote
+place=pla,note=onote,
 where rnumber = oid;
 END //
 DELIMITER ;

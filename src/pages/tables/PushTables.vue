@@ -117,8 +117,8 @@
 
 <script>
 import axios from 'axios'
-axios.defaults.baseURL = 'http://192.168.31.215:5000/'
-// axios.defaults.baseURL = 'http://fcbyk.com:5000/'
+// axios.defaults.baseURL = 'http://192.168.31.215:5000/'
+axios.defaults.baseURL = 'http://fcbyk.com:5000/'
 let emptyStr = ''
 export default {
     name:'PushTables',

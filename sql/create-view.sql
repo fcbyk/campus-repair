@@ -1,17 +1,17 @@
 -- 创建学生信息视图
 create view student_information as
-select user_id as sid, user_name as sname, user_gender as gender,user_phone as phone
-from user_information where user_sort='student';
+select user_id as sid, user_name as sname, user_gender as gender,user_phone as phone,
+user_addr as addr from user_information where user_sort='student';
 
 -- 创建教职工信息视图
 create view staff_information as
-select user_id as tid, user_name as tname, user_gender as gender,user_phone as phone
-from user_information where user_sort='staff';
+select user_id as tid, user_name as tname, user_gender as gender,user_phone as phone,
+user_addr as addr from user_information where user_sort='staff';
 
 -- 创建维修师傅信息视图
 create view repairMan_information as
 select rid, user_name as rname, user_gender as gender,user_phone as phone,
-category from user_information,category where user_id = rid;
+user_addr as addr category from user_information,category where user_id = rid;
 
 -- 创建简单用户信息视图，用于在测试账号板块
 create view simple_account as 
