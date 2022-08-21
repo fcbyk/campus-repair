@@ -30,6 +30,11 @@
                 >详细</el-button>
                 <el-button
                 size="mini"
+                @click="handleOff(scope.$index, scope.row)"
+                type="danger"
+                >取消</el-button>
+                <el-button
+                size="mini"
                 @click="handleAcomplish(scope.$index, scope.row)" type="primary">已完成</el-button>
                 <div slot="reference" class="name-wrapper">
                     <span>{{ scope.row.place }}</span>
@@ -54,10 +59,11 @@
         <p>故障设备： {{showData.f_equ}}</p>
         <p>故障单发起人： {{showData.init_id}}</p>
         <p>维修地点： {{showData.place}}</p>
-        <p>预约维修时间：{{showData.rtime}}</p>
         <p>维修备注：{{showData.note}}</p>
+        <p>创建时间：{{date(showData.creation_time)}}</p>
+        <p>接单时间：{{date(showData.order_time)}}</p>
         <p>故障单状态：
-          <el-tag size="mini" effect="dark">
+          <el-tag size="mini" effect="dark" type="success">
             {{showData.order_state}}</el-tag>
         </p>
       </div>
@@ -83,11 +89,62 @@ export default {
       this.tableData = JSON.parse(sessionStorage.getItem('todolist'))
     },
     methods: {
+      handleOff(index, row){
+
+        this.$confirm('确认取消吗',{
+          customClass:'message'
+        }).then(() => {
+
+        axios({
+              method: 'POST',
+              url:'/order-off',
+              params: {
+                  rnumber: row.rnumber,
+              },
+          }).then(() => {
+
+                axios({
+                      method: 'POST',
+                      url:'/gettodolist',
+                      params: {
+                          rid: sessionStorage.getItem('id'),
+                      },
+                  }).then(response => {
+                    sessionStorage.setItem('todolist',JSON.stringify(response.data))
+                    this.tableData = JSON.parse(sessionStorage.getItem('todolist'))
+                    },()=>{})
+
+                this.$message.success({
+                  showClose:true,
+                  message:'取消成功',
+                  duration:1000
+                })
+
+          },()=>{
+            this.$message.error({
+              message:'数据库连接失败',
+              duration:1500,
+              showClose:true,    
+            })
+          })}).catch(() => {});
+
+      },
+      date(x){
+        let a = new Date(x)
+        let b = a.toLocaleTimeString('chinese',{hour12:false})
+        let c = a.toLocaleDateString()
+        return c + ' ' + b
+      },
       handleShow(index, row) {
         this.showData = row
         this.dialogVisible = true
       },
       handleAcomplish(index, row){
+
+       this.$confirm('确定已经完成了吗',{
+          customClass:'message'
+        }).then(() => {
+
         axios({
               method: 'POST',
               url:'/order-acomplish',
@@ -119,6 +176,8 @@ export default {
               showClose:true,    
             })
           })
+
+          }).catch(() => {});
       },
       refresh(){
         axios({

@@ -26,11 +26,12 @@
                 <el-button
                 size="mini"
                 @click="handleEdit(scope.$index, scope.row)"
-                type="primary"
+                type="info"
                 >详细</el-button>
                 <el-button
                 size="mini"
                 @click="star"
+                type="primary"
                 >评价</el-button>
                 <div slot="reference" class="name-wrapper">
                     <span>{{ scope.row.f_equ }}</span>
@@ -54,9 +55,11 @@
         <p>故障设备： {{showData.f_equ}}</p>
         <p>故障单发起人： {{showData.init_id}}</p>
         <p>维修地点： {{showData.place}}</p>
-        <p>预约维修时间：{{showData.rtime}}</p>
-        <p>负责师傅： {{showData.rid}}</p>
         <p>维修备注：{{showData.note}}</p>
+        <p>创建时间：{{date(showData.creation_time)}}</p>
+        <p>接单时间：{{date(showData.order_time)}}</p>
+        <p>完成时间：{{date(showData.finish_time)}}</p>
+        <p>接单师傅： {{showData.rid}}</p>
         <p>故障单状态：
           <el-tag size="mini" effect="dark" type='info'>
             {{showData.order_state}}</el-tag>
@@ -84,6 +87,12 @@ export default {
       this.tableData = JSON.parse(sessionStorage.getItem('finished'))
     },
     methods: {
+      date(x){
+        let a = new Date(x)
+        let b = a.toLocaleTimeString('chinese',{hour12:false})
+        let c = a.toLocaleDateString()
+        return c + ' ' + b
+      },
       star(){
         this.$message.info({
           message:'评价功能还没写! emo',

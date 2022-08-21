@@ -12,7 +12,7 @@
           <p>通过传统电话方式进行报修，本系统会为您提供维修电话</p>
         </div>
       </div>
-      <div class="box2" @click="dialogVisible2 = true">
+      <div class="box2" @click="neworder">
         <div class="left"><i class="el-icon-mobile-phone"></i></div>
         <div class="right">
           <i>线上报修</i>
@@ -57,9 +57,6 @@
       >
       <div style="height: 30px;"></div>
       <el-form ref="user" :model="user" label-width="100px">
-        <el-form-item label="故障单号" >
-          <el-input v-model="user.number" placeholder="很抱歉，系统目前不支持自动生成"></el-input>
-        </el-form-item>
         <el-form-item label="维修类别">
           <el-select v-model="user.sort" placeholder="请选择类别">
             <el-option value="后勤报修"></el-option>
@@ -141,6 +138,12 @@ export default {
           this.fx = res.data})
     },
     methods:{
+      neworder(){
+        let a= new Date
+        this.user.number='f'+a.getDate()+a.getDay()+a.getHours()
+        +parseInt(Math.random()*10000)
+        this.dialogVisible2 = true  
+      },
       handleClose() {
         this.$confirm('确认关闭？',{
           customClass:'message'
@@ -167,14 +170,6 @@ export default {
           },()=>{})
       },
       confirm(){
-        if(this.user.number== emptyStr){
-          this.$message.error({
-            message:"故障单号不能为空",
-            duration:1500,
-            showClose: true,
-          })
-          return 0
-        }
         if(this.user.sort== emptyStr){
           this.$message.error({
             message:"请选择维修类别",
@@ -227,7 +222,7 @@ export default {
             }
             if(response.data=='err'){
                 this.$message.error({
-                  message:"故障单以存在，添加失败",
+                  message:"添加失败,请重试",
                   duration:1500,
                   showClose: true,
                 })

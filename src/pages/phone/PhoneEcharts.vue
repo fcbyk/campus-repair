@@ -36,7 +36,7 @@
       <div class="chartbox3">
         <div ref="chartDom3" class="chartDom3"></div>
       </div>
-      <p>数据来源：您所完成的故障单的一级地址分布</p>
+      <p>数据来源：完成故障单的一级地址出现次数</p>
     </el-card>
     <div style="height: 20px;"></div>
   </div>

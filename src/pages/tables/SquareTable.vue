@@ -54,8 +54,8 @@
         <p>故障设备： {{showData.f_equ}}</p>
         <p>故障单发起人： {{showData.init_id}}</p>
         <p>维修地点： {{showData.place}}</p>
-        <p>预约维修时间：{{showData.rtime}}</p>
         <p>维修备注：{{showData.note}}</p>
+        <p>创建时间：{{date(showData.creation_time)}}</p>
         <p>故障单状态：
           <el-tag size="mini" effect="dark">
             {{showData.order_state}}</el-tag>
@@ -83,11 +83,22 @@ export default {
       this.tableData = JSON.parse(sessionStorage.getItem('square'))
     },
     methods: {
+      date(x){
+        let a = new Date(x)
+        let b = a.toLocaleTimeString('chinese',{hour12:false})
+        let c = a.toLocaleDateString()
+        return c + ' ' + b
+      },
       handleShow(index, row) {
         this.showData = row
         this.dialogVisible = true
       },
       handleAdd(index, row){
+
+        this.$confirm('确认接单吗',{
+          customClass:'message'
+        }).then(() => {
+
         axios({
               method: 'POST',
               url:'/order-receiving',
@@ -119,6 +130,9 @@ export default {
               showClose:true,    
             })
           })
+
+          })
+          .catch(() => {});
       },
       refresh(){
         axios({
