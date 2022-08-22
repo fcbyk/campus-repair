@@ -284,12 +284,13 @@ export default {
   margin-top: 2px;
 }
 .card-top{
-  font-size: 20px;
+  font-size: 15px;
   /* font-weight: bold; */
-  margin-bottom: 8px;
+  /* margin-bottom: 0px; */
   color:rgb(50, 50, 50);
   display: flex;
   justify-content: space-between;
+  /* font-weight: 700; */
 }
 hr{
   box-shadow: none;
@@ -299,7 +300,7 @@ hr{
 }
 .alter{
   font-size: 14px;
-  padding-top: 5px;
+  /* padding-top: 5px; */
   padding-right: 5px;
   color: #409EFF;
 }
