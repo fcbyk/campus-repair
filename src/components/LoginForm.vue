@@ -135,6 +135,7 @@ export default {
                 sessionStorage.setItem('phone',response.data[0].user_phone)
                 sessionStorage.setItem('sort',response.data[0].user_sort)
                 sessionStorage.setItem('addr',response.data[0].user_addr)
+                sessionStorage.setItem('photo',response.data[0].user_photo)
             }) 
             if(this.id[0]=='r'){
                 axios({

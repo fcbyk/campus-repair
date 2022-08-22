@@ -119,7 +119,7 @@ export default {
     data() {
       return {
         id:sessionStorage.getItem('id'),
-        circleUrl: `http://fcbyk.com/images/pig.jpeg`,
+        circleUrl: 'http://fcbyk.com/images/'+sessionStorage.getItem('photo'),
         user:{
           name: sessionStorage.getItem('name'),
           gender:  sessionStorage.getItem('gender'),
@@ -181,7 +181,7 @@ export default {
       alter(){
         this.$message({
           showClose: true,
-          message: '暂不支持修改头像，如需修改，联系开发者',
+          message: '暂不支持修改头像噢',
           type: 'error',
           duration:1500,
         })
