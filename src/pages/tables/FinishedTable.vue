@@ -48,6 +48,7 @@
       :show-close='false'
       custom-class='menudialog'
       top='20vh'
+      @open="beforelogin"
       >
       <div>
         <p>故障单号： {{showData.rnumber}}</p>
@@ -59,7 +60,20 @@
         <p>创建时间：{{date(showData.creation_time)}}</p>
         <p>接单时间：{{date(showData.order_time)}}</p>
         <p>完成时间：{{date(showData.finish_time)}}</p>
-        <p>接单师傅： {{showData.rid}}</p>
+
+        <el-popover 
+        placement="top"
+        title="接单师傅信息"
+        width="300"
+        trigger="click"
+        >
+          <p>名字：{{user.name}}</p>
+          <p>电话：{{user.phone}}</p>
+        <div slot="reference" class="name-wrapper">
+            <span>接单师傅： {{showData.rid}}</span>
+        </div>
+        </el-popover>
+
         <p>故障单状态：
           <el-tag size="mini" effect="dark" type='info'>
             {{showData.order_state}}</el-tag>
@@ -80,13 +94,31 @@ export default {
         return {
             tableData: [],
             dialogVisible: false,
-            showData:[]
+            showData:[],
+            user:{
+              name: '',
+              phone:  '',
+              addr: '',
+            },
         }
     },
     mounted(){
       this.tableData = JSON.parse(sessionStorage.getItem('finished'))
     },
     methods: {
+      beforelogin() {
+            axios({
+                method: 'POST',
+                url:'/user',
+                params: {
+                    id: this.showData.rid,
+                },
+            }).then(response => {
+              this.user.name = response.data[0].user_name
+              this.user.phone = response.data[0].user_phone
+                // sessionStorage.setItem('addr',response.data[0].user_addr)
+            }) 
+      },
       date(x){
         let a = new Date(x)
         let b = a.toLocaleTimeString('chinese',{hour12:false})
