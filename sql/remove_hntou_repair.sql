@@ -1,26 +1,26 @@
 use hntou_repair;
 
-# É¾³ı´¥·¢Æ÷
+# åˆ é™¤è§¦å‘å™¨
 drop trigger new_register;
 drop trigger delete_user;
 
-# É¾³ı´æ´¢¹ı³Ì
+# åˆ é™¤å­˜å‚¨è¿‡ç¨‹
 drop procedure alter_orders;
 drop procedure alter_user_info;
 drop procedure new_orders;
 
-# É¾³ıÊÓÍ¼
+# åˆ é™¤è§†å›¾
 drop view repairMan_information;
 drop view simple_account;
 drop view staff_information;
 drop view student_information;
 drop view tradition;
 
-# É¾³ı±í
+# åˆ é™¤è¡¨
 drop table category;
 drop table register;
 drop table repair_order;
 drop table user_information;
 
-# É¾³ıÊı¾İ¿â
+# åˆ é™¤æ•°æ®åº“
 drop database hntou_repair;

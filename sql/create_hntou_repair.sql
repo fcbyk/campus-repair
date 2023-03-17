@@ -1,67 +1,67 @@
-/***** ´´½¨Êı¾İ¿âºÍÑ¡ÔñÊı¾İ¿â *****/
+/***** åˆ›å»ºæ•°æ®åº“å’Œé€‰æ‹©æ•°æ®åº“ *****/
 create database hntou_repair;
 use hntou_repair;
 
 /*****
-´´½¨»ù±¾±í
-ÕËºÅ  (ÕËºÅ£¬µÇÂ¼ÃÜÂë£¬ÕËºÅÀà±ğ)
-ÓÃ»§ĞÅÏ¢±í (ÓÃ»§id£¬ĞÕÃû£¬ĞÔ±ğ£¬ÁªÏµµç»°£¬ÈËÔ±Àà±ğ, µØÖ·)
-¹ÊÕÏµ¥  (¹ÊÕÏµ¥ºÅ£¬Î¬ĞŞ·ÖÀàºÅ£¬¹ÊÕÏÉè±¸Ãû³Æ£¬·¢ÆğÈËÔ±id£¬µØµã£¬½Óµ¥ÈËÔ±id£¬±¸×¢£¬¹ÊÕÏµ¥×´Ì¬£¬´´½¨Ê±¼ä)
-Î¬ĞŞÈËÔ±·ÖÀà±í£¨Î¬ĞŞÈËÔ±id£¬ËùÊôÎ¬ĞŞ·ÖÀàºÅ£©
+åˆ›å»ºåŸºæœ¬è¡¨
+è´¦å·  (è´¦å·ï¼Œç™»å½•å¯†ç ï¼Œè´¦å·ç±»åˆ«)
+ç”¨æˆ·ä¿¡æ¯è¡¨ (ç”¨æˆ·idï¼Œå§“åï¼Œæ€§åˆ«ï¼Œè”ç³»ç”µè¯ï¼Œäººå‘˜ç±»åˆ«, åœ°å€)
+æ•…éšœå•  (æ•…éšœå•å·ï¼Œç»´ä¿®åˆ†ç±»å·ï¼Œæ•…éšœè®¾å¤‡åç§°ï¼Œå‘èµ·äººå‘˜idï¼Œåœ°ç‚¹ï¼Œæ¥å•äººå‘˜idï¼Œå¤‡æ³¨ï¼Œæ•…éšœå•çŠ¶æ€ï¼Œåˆ›å»ºæ—¶é—´)
+ç»´ä¿®äººå‘˜åˆ†ç±»è¡¨ï¼ˆç»´ä¿®äººå‘˜idï¼Œæ‰€å±ç»´ä¿®åˆ†ç±»å·ï¼‰
 *****/
 
-# ÕËºÅĞÅÏ¢±í
+# è´¦å·ä¿¡æ¯è¡¨
 create table register(
     id varchar(20) primary key,
     pw varchar(20) not null,
     sort varchar(10) check(sort in('student','staff','repairMan'))
 );
 
-# ÓÃ»§ĞÅÏ¢±í
+# ç”¨æˆ·ä¿¡æ¯è¡¨
 create table user_information(
 	user_id varchar(20) primary key,
-    user_name varchar(20) default 'ĞÂÓÃ»§',
-    user_gender char check(user_gender in('ÄĞ','Å®')),
-    user_phone varchar(20) default 'Î´°ó¶¨',
+    user_name varchar(20) default 'æ–°ç”¨æˆ·',
+    user_gender char check(user_gender in('ç”·','å¥³')),
+    user_phone varchar(20) default 'æœªç»‘å®š',
     user_sort varchar(10) check(user_sort in('student','staff','repairMan')) not null,
-    user_addr varchar(50) default 'Î´ÌîĞ´'
+    user_addr varchar(50) default 'æœªå¡«å†™'
 );
 
-# ´´½¨¹ÊÕÏµ¥ĞÅÏ¢±í
+# åˆ›å»ºæ•…éšœå•ä¿¡æ¯è¡¨
 create table repair_order(
 	rnumber varchar(20) primary key,
-    rsort varchar(10) check(rsort in('ºóÇÚ±¨ĞŞ','Ë®±í¡¢Ò»¿¨Í¨','¿Õµ÷Î¬ĞŞ',
-    'ÊÒÄÚÈÈË®','Â¥µÀÒûË®»úÎ¬ĞŞ','Ïû·À','Î´Ñ¡Ôñ')),
+    rsort varchar(10) check(rsort in('åå‹¤æŠ¥ä¿®','æ°´è¡¨ã€ä¸€å¡é€š','ç©ºè°ƒç»´ä¿®',
+    'å®¤å†…çƒ­æ°´','æ¥¼é“é¥®æ°´æœºç»´ä¿®','æ¶ˆé˜²','æœªé€‰æ‹©')),
     f_equ varchar(20) not null,
     init_id varchar(20) not null,
     place varchar(50) not null,
     rid varchar(20),
     note varchar(100),
     order_state varchar(10)
-    check(order_state in('ÍÆËÍÖĞ','ÒÑ½Óµ¥','ÒÑÍê³É'))
-    default 'ÍÆËÍÖĞ',
+    check(order_state in('æ¨é€ä¸­','å·²æ¥å•','å·²å®Œæˆ'))
+    default 'æ¨é€ä¸­',
     rtime datetime,
     foreign key(init_id) references user_information(user_id),
     foreign key(rid) references user_information(user_id)
 );
 
-# ´´½¨Î¬ĞŞÈËÔ±Àà±ğ±í
+# åˆ›å»ºç»´ä¿®äººå‘˜ç±»åˆ«è¡¨
 create table category(
     rid varchar(20) primary key,
     category varchar(10)
-    check(category in('ºóÇÚ±¨ĞŞ','Ë®±í¡¢Ò»¿¨Í¨','¿Õµ÷Î¬ĞŞ',
-    'ÊÒÄÚÈÈË®','Â¥µÀÒûË®»úÎ¬ĞŞ','Ïû·À','Î´Ñ¡Ôñ')) default 'Î´Ñ¡Ôñ'
+    check(category in('åå‹¤æŠ¥ä¿®','æ°´è¡¨ã€ä¸€å¡é€š','ç©ºè°ƒç»´ä¿®',
+    'å®¤å†…çƒ­æ°´','æ¥¼é“é¥®æ°´æœºç»´ä¿®','æ¶ˆé˜²','æœªé€‰æ‹©')) default 'æœªé€‰æ‹©'
 );
 
-/***** ´´½¨ÊÓÍ¼
-Ñ§ÉúĞÅÏ¢ (sid,sname,gender,phone,addr)
-½ÌÖ°¹¤ĞÅÏ¢ (tid,tname,gender,phone,addr)
-Î¬ĞŞÊ¦¸µĞÅÏ¢(rid,rname,gender,phone,addr,category)
-¼òµ¥ÓÃ»§ĞÅÏ¢(id,pw,name)
-´«Í³±¨ĞŞµç»°ĞÅÏ¢(rid,category,name,phone)
+/***** åˆ›å»ºè§†å›¾
+å­¦ç”Ÿä¿¡æ¯ (sid,sname,gender,phone,addr)
+æ•™èŒå·¥ä¿¡æ¯ (tid,tname,gender,phone,addr)
+ç»´ä¿®å¸ˆå‚…ä¿¡æ¯(rid,rname,gender,phone,addr,category)
+ç®€å•ç”¨æˆ·ä¿¡æ¯(id,pw,name)
+ä¼ ç»ŸæŠ¥ä¿®ç”µè¯ä¿¡æ¯(rid,category,name,phone)
 *****/
 
-# ´´½¨Ñ§ÉúĞÅÏ¢ÊÓÍ¼
+# åˆ›å»ºå­¦ç”Ÿä¿¡æ¯è§†å›¾
 create view student_information as
 select user_id as sid,
        user_name as sname,
@@ -71,7 +71,7 @@ select user_id as sid,
 from user_information
 where user_sort='student';
 
-# ´´½¨½ÌÖ°¹¤ĞÅÏ¢ÊÓÍ¼
+# åˆ›å»ºæ•™èŒå·¥ä¿¡æ¯è§†å›¾
 create view staff_information as
 select user_id as tid,
        user_name as tname,
@@ -81,7 +81,7 @@ select user_id as tid,
 from user_information
 where user_sort='staff';
 
-# ´´½¨Î¬ĞŞÊ¦¸µĞÅÏ¢ÊÓÍ¼
+# åˆ›å»ºç»´ä¿®å¸ˆå‚…ä¿¡æ¯è§†å›¾
 create view repairMan_information as
 select rid, user_name as rname,
        user_gender as gender,
@@ -91,7 +91,7 @@ select rid, user_name as rname,
 from user_information,category
 where user_id = rid;
 
-# ´´½¨¼òµ¥ÓÃ»§ĞÅÏ¢ÊÓÍ¼£¬ÓÃÓÚÔÚ²âÊÔÕËºÅ°å¿é
+# åˆ›å»ºç®€å•ç”¨æˆ·ä¿¡æ¯è§†å›¾ï¼Œç”¨äºåœ¨æµ‹è¯•è´¦å·æ¿å—
 create view simple_account as
 select register.id,
        register.pw,
@@ -99,7 +99,7 @@ select register.id,
 from register,user_information
 where register.id = user_information.user_id;
 
-# ´´½¨´«Í³±¨ĞŞ°å¿éËùÓÃµÄÊı¾İÊÓÍ¼
+# åˆ›å»ºä¼ ç»ŸæŠ¥ä¿®æ¿å—æ‰€ç”¨çš„æ•°æ®è§†å›¾
 create view tradition as
 select rid,
        category,
@@ -107,15 +107,15 @@ select rid,
        phone
 from repairMan_information;
 
-/***** ´´½¨Ë÷Òı *****/
+/***** åˆ›å»ºç´¢å¼• *****/
 # create index register_index on register(id);
 # create index user_information_index on user_information(user_id);
 # create index repair_order_index on repair_order(rnumber);
 # create index category_index on category(category);
 
-/***** ´´½¨´¥·¢Æ÷ *****/
-# new_register ´¥·¢Æ÷¹¦ÄÜ
-# ÕËºÅ¹ØÏµ±íÌí¼ÓÒ»ÌõÊı¾İºó£¬´¥·¢ÍùÓÃ»§ĞÅÏ¢±íÌí¼ÓÒ»ÌõÊı¾İ£¬Èô¸ÃÕËºÅÎªÎ¬ĞŞÈËÔ±ÕËºÅ£¬ÍùÎ¬ĞŞÈËÔ±·ÖÀà±íÌí¼ÓÒ»ÌõĞÂÊı¾İ
+/***** åˆ›å»ºè§¦å‘å™¨ *****/
+# new_register è§¦å‘å™¨åŠŸèƒ½
+# è´¦å·å…³ç³»è¡¨æ·»åŠ ä¸€æ¡æ•°æ®åï¼Œè§¦å‘å¾€ç”¨æˆ·ä¿¡æ¯è¡¨æ·»åŠ ä¸€æ¡æ•°æ®ï¼Œè‹¥è¯¥è´¦å·ä¸ºç»´ä¿®äººå‘˜è´¦å·ï¼Œå¾€ç»´ä¿®äººå‘˜åˆ†ç±»è¡¨æ·»åŠ ä¸€æ¡æ–°æ•°æ®
 DELIMITER //
 create trigger new_register
     after insert on register
@@ -128,8 +128,8 @@ begin
 end //
 DELIMITER ;
 
-# new_register´¥·¢Æ÷¹¦ÄÜ
-# ÕËºÅ¹ØÏµ±íÉ¾³ıÒ»ÌõÊı¾İºó£¬´¥·¢ÓÃ»§ĞÅÏ¢±íÉ¾³ıÏà¹ØÊı¾İ£¬Èô¸ÃÕËºÅÎªÎ¬ĞŞÈËÔ±ÕËºÅ£¬Í¬Ê±É¾³ıÎ¬ĞŞÈËÔ±·ÖÀà±íÏà¹ØÊı¾İ
+# new_registerè§¦å‘å™¨åŠŸèƒ½
+# è´¦å·å…³ç³»è¡¨åˆ é™¤ä¸€æ¡æ•°æ®åï¼Œè§¦å‘ç”¨æˆ·ä¿¡æ¯è¡¨åˆ é™¤ç›¸å…³æ•°æ®ï¼Œè‹¥è¯¥è´¦å·ä¸ºç»´ä¿®äººå‘˜è´¦å·ï¼ŒåŒæ—¶åˆ é™¤ç»´ä¿®äººå‘˜åˆ†ç±»è¡¨ç›¸å…³æ•°æ®
 DELIMITER //
 create trigger delete_user
     after delete on register
@@ -142,8 +142,8 @@ begin
 end //
 DELIMITER ;
 
-/***** ´æ´¢¹ı³Ì *****/
-# ´´½¨¸ü¸ÄÓÃ»§ĞÅÏ¢µÄ´æ´¢¹ı³Ì
+/***** å­˜å‚¨è¿‡ç¨‹ *****/
+# åˆ›å»ºæ›´æ”¹ç”¨æˆ·ä¿¡æ¯çš„å­˜å‚¨è¿‡ç¨‹
 DELIMITER //
 CREATE PROCEDURE alter_user_info(
     in uname varchar(20),
@@ -161,7 +161,7 @@ BEGIN
 END //
 DELIMITER ;
 
-# ´´½¨Éú³É¹ÊÕÏµ¥µÄ´æ´¢¹ı³Ì
+# åˆ›å»ºç”Ÿæˆæ•…éšœå•çš„å­˜å‚¨è¿‡ç¨‹
 DELIMITER //
 CREATE PROCEDURE new_orders(
     in oid varchar(20),
@@ -174,7 +174,7 @@ BEGIN
 END //
 DELIMITER ;
 
-# ´´½¨ĞŞ¸Ä¹ÊÕÏµ¥µÄ´æ´¢¹ı³Ì
+# åˆ›å»ºä¿®æ”¹æ•…éšœå•çš„å­˜å‚¨è¿‡ç¨‹
 DELIMITER //
 CREATE PROCEDURE alter_orders(
     in sort varchar(20),
