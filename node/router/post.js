@@ -1,33 +1,8 @@
+const db = require('../mysql/mysql.js')
 const express = require('express')
-const app = express()
+let router = express.Router()
 
-
-// const cors = require('cors')
-// app.use(cors()) 
-
-const mysql = require('mysql')
-const db = mysql.createPool({
-    host: '',
-    user: '',
-    password: '',
-    database: 'hntou_repair'
-})
-
-// let session=require('express-session')
-// app.use(session({
-//     secret:'keyboard cat',
-//     resave:false,
-//     saveUninitialized:true
-// }))
-
-app.get('/test',function(req,res){
-    db.query('select * from simple_account',(err,results)=>{
-        if(err) return console.log(err.message)
-        res.send(results)
-    }) 
-})
-
-app.post('/register',(req,res)=>{
+router.post('/register',(req,res)=>{
     db.query('insert into register set ?',req.query,(err,results)=>{
         if(err) {
             res.send('err')
@@ -38,7 +13,7 @@ app.post('/register',(req,res)=>{
     }) 
 })
 
-app.post('/login',(req,res)=>{
+router.post('/login',(req,res)=>{
     // req.query.id
     db.query('select pw from register where id= ? ',
     req.query.id,(err,results)=>{
@@ -61,7 +36,7 @@ app.post('/login',(req,res)=>{
     }) 
 })
 
-app.post('/user',(req,res)=>{
+router.post('/user',(req,res)=>{
     db.query('select * from user_information where user_id= ? ',
     req.query.id,(err,results)=>{
         if(err) {
@@ -72,7 +47,7 @@ app.post('/user',(req,res)=>{
     }) 
 })
 
-app.post('/category',(req,res)=>{
+router.post('/category',(req,res)=>{
     db.query('select * from category where rid= ? ',
     req.query.id,(err,results)=>{
         if(err) {
@@ -85,7 +60,7 @@ app.post('/category',(req,res)=>{
 
 const sql1 = 'call alter_user_info(?, ?, ?, ?,?, ?)' 
 
-app.post('/alter-user',(req,res)=>{
+router.post('/alter-user',(req,res)=>{
     // console.log(req.query)
     db.query(sql1,[req.query.name, req.query.gender, 
         req.query.phone,req.query.addr, req.query.id,
@@ -100,49 +75,7 @@ app.post('/alter-user',(req,res)=>{
     }) 
 })
 
-app.get('/tradition-1',function(req,res){
-    db.query('select * from tradition where category="后勤报修" ',
-    (err,results)=>{
-        if(err) return console.log(err.message)
-        res.send(results)
-    }) 
-})
-app.get('/tradition-2',function(req,res){
-    db.query('select * from tradition where category="水表、一卡通" ',
-    (err,results)=>{
-        if(err) return console.log(err.message)
-        res.send(results)
-    }) 
-})
-app.get('/tradition-3',function(req,res){
-    db.query('select * from tradition where category="室内热水" ',
-    (err,results)=>{
-        if(err) return console.log(err.message)
-        res.send(results)
-    }) 
-})
-app.get('/tradition-4',function(req,res){
-    db.query('select * from tradition where category="空调维修" ',
-    (err,results)=>{
-        if(err) return console.log(err.message)
-        res.send(results)
-    }) 
-})
-app.get('/tradition-5',function(req,res){
-    db.query('select * from tradition where category="楼道饮水机维修" ',
-    (err,results)=>{
-        if(err) return console.log(err.message)
-        res.send(results)
-    }) 
-})
-app.get('/tradition-6',function(req,res){
-    db.query('select * from tradition where category="消防" ',(err,results)=>{
-        if(err) return console.log(err.message)
-        res.send(results)
-    }) 
-})
-
-app.post('/neworder',(req,res)=>{
+router.post('/neworder',(req,res)=>{
     db.query('call new_orders(?,?,?,?,?,?)',
     [req.query.number, req.query.sort, req.query.equ, 
     req.query.uid, req.query.addr, req.query.note],
@@ -157,7 +90,7 @@ app.post('/neworder',(req,res)=>{
     }) 
 })
 
-app.post('/getpush',(req,res)=>{
+router.post('/getpush',(req,res)=>{
     db.query('select * from repair_order where init_id= ? and order_state="推送中"',
     req.query.id,(err,results)=>{
         if(err) {
@@ -168,7 +101,7 @@ app.post('/getpush',(req,res)=>{
     }) 
 })
 
-app.post('/getreceiving',(req,res)=>{
+router.post('/getreceiving',(req,res)=>{
     db.query('select * from repair_order where init_id= ? and order_state="已接单"',
     req.query.id,(err,results)=>{
         if(err) {
@@ -179,7 +112,7 @@ app.post('/getreceiving',(req,res)=>{
     }) 
 })
 
-app.post('/getfinished',(req,res)=>{
+router.post('/getfinished',(req,res)=>{
     db.query('select * from repair_order where init_id= ? and order_state="已完成"',
     req.query.id,(err,results)=>{
         if(err) {
@@ -190,7 +123,7 @@ app.post('/getfinished',(req,res)=>{
     }) 
 })
 
-app.post('/deletethis',(req,res)=>{
+router.post('/deletethis',(req,res)=>{
     db.query('delete from repair_order where rnumber= ? ',
     req.query.number,(err,results)=>{
         if(err) {
@@ -203,7 +136,7 @@ app.post('/deletethis',(req,res)=>{
     }) 
 })
 
-app.post('/alterorder',(req,res)=>{
+router.post('/alterorder',(req,res)=>{
     db.query('call alter_orders(?,?,?,?,?)',
     [ req.query.sort, req.query.equ, 
     req.query.addr, req.query.note,req.query.number],
@@ -218,7 +151,7 @@ app.post('/alterorder',(req,res)=>{
     }) 
 })
 
-app.post('/getsquare',(req,res)=>{
+router.post('/getsquare',(req,res)=>{
     db.query('select * from repair_order where rsort=? and order_state="推送中"',
     req.query.category,(err,results)=>{
         if(err) {
@@ -229,7 +162,7 @@ app.post('/getsquare',(req,res)=>{
     }) 
 })
 
-app.post('/order-receiving',(req,res)=>{
+router.post('/order-receiving',(req,res)=>{
     db.query('update repair_order set order_state="已接单",rid = ? where rnumber = ?;',
     [req.query.rid,req.query.rnumber],(err,results)=>{
         if(err) {
@@ -242,7 +175,7 @@ app.post('/order-receiving',(req,res)=>{
     }) 
 })
 
-app.post('/gettodolist',(req,res)=>{
+router.post('/gettodolist',(req,res)=>{
     db.query('select * from repair_order where rid=? and order_state="已接单"',
     req.query.rid,(err,results)=>{
         if(err) {
@@ -253,7 +186,7 @@ app.post('/gettodolist',(req,res)=>{
     }) 
 })
 
-app.post('/order-acomplish',(req,res)=>{
+router.post('/order-acomplish',(req,res)=>{
     db.query('update repair_order set order_state="已完成" where rnumber = ?;',
     [req.query.rnumber],(err,results)=>{
         if(err) {
@@ -266,7 +199,7 @@ app.post('/order-acomplish',(req,res)=>{
     }) 
 })
 
-app.post('/getcompleted',(req,res)=>{
+router.post('/getcompleted',(req,res)=>{
     db.query('select * from repair_order where rid=? and order_state="已完成"',
     req.query.rid,(err,results)=>{
         if(err) {
@@ -277,8 +210,4 @@ app.post('/getcompleted',(req,res)=>{
     }) 
 })
 
-app.use(express.static('dist'))
-
-app.listen(5000,()=>{
-    console.log('express server running at http://fcbyk.com:5000')
-})
+module.exports = router
