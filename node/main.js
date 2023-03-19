@@ -1,8 +1,9 @@
 const express = require('express')
 const app = express()
 
-// const cors = require('cors')
-// app.use(cors()) 
+// 允许跨域
+const cors = require('cors')
+app.use(cors()) 
 
 // let session=require('express-session')
 // app.use(session({
